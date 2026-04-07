@@ -80,9 +80,21 @@ See `.env.example` for the full list and descriptions.
 | `PAYMENT_RAILS_ENABLED` | Yes | `true` or `false` |
 | `DEFAULT_FUNDING_RAIL` | Yes | e.g. `manual` |
 | `DEFAULT_PAYOUT_RAIL` | Yes | e.g. `manual` |
+| `MENAMARKET_API` | Yes | Set to the full base URL of the deployed API (e.g. `https://your-project.vercel.app/api`). Set this in the Vercel dashboard. |
 | `OPENROUTER_API_KEY` | No | Only required if AI features are enabled |
+| `OPENROUTER_MODEL` | No | Defaults to `openrouter/auto:free`. Override to select a specific model. |
 
 > **Security note**: The app will refuse to start in production if `ACTOR_SESSION_SECRET` or `ADMIN_SESSION_SECRET` are missing or empty. Never deploy with the default `change-me` password or placeholder secrets.
+
+### Branch protection (recommended)
+
+Enable the following settings on the `main` branch in the GitHub repository settings:
+
+- **Require status checks to pass before merging** — select the `CI / Lint, typecheck, test, build` check.
+- **Require branches to be up to date before merging.**
+- **Do not allow bypassing the above settings.**
+
+These settings ensure every PR passes CI before it can be merged.
 
 ### Notes on workspace tooling
 
