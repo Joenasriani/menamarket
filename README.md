@@ -50,7 +50,7 @@ This monorepo contains **two separate Next.js apps** that must be deployed as **
 | `apps/web` | Public-facing website (Markets, Activity, Portfolio, etc.) | Everyone — **no login required** to browse |
 | `apps/admin` | Internal admin panel (Market Ops, Audit, Drafts, etc.) | Admins only — **login required** |
 
-> **⚠️ Important**: If you only see an admin login page with "Protected internal access" after deploying, you deployed the **admin** app instead of the **web** app. Follow the instructions below to deploy the correct app.
+> **⚠️ Important**: If you only see an admin login page with "Protected internal access" after deploying, you deployed the **admin** app instead of the **web** app. Follow [Option A](#option-a-deploy-from-the-repository-root-web-app) or [Option B](#option-b-deploy-each-app-with-its-own-root-directory) below to deploy the correct app.
 
 ### Option A: Deploy from the repository root (web app)
 
