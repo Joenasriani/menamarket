@@ -14,29 +14,31 @@ function buildFilterHref(
   params: { q?: string; category?: string; jurisdiction?: string; status?: string },
   next: Partial<{ q: string; category: string; jurisdiction: string; status: string }>
 ): string {
-  const url = new URL("http://menamarket.local/markets");
   const merged = { ...params, ...next };
+  const searchParams = new URLSearchParams();
 
   for (const [key, value] of Object.entries(merged)) {
     if (value) {
-      url.searchParams.set(key, value);
+      searchParams.set(key, value);
     }
   }
 
-  return url.pathname + (url.search ? url.search : "");
+  const qs = searchParams.toString();
+  return qs ? `/markets?${qs}` : "/markets";
 }
 
 function clearFilterHref(
   params: { q?: string; category?: string; jurisdiction?: string; status?: string },
   key: "q" | "category" | "jurisdiction" | "status"
 ): string {
-  const url = new URL("http://menamarket.local/markets");
+  const searchParams = new URLSearchParams();
   for (const [entryKey, entryValue] of Object.entries(params)) {
     if (entryKey !== key && entryValue) {
-      url.searchParams.set(entryKey, entryValue);
+      searchParams.set(entryKey, entryValue);
     }
   }
-  return url.pathname + (url.search ? url.search : "");
+  const qs = searchParams.toString();
+  return qs ? `/markets?${qs}` : "/markets";
 }
 
 export default async function MarketsPage({ searchParams }: { searchParams: SearchParams }) {

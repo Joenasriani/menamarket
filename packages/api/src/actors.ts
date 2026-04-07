@@ -79,7 +79,29 @@ async function writeActorCatalog(next: ActorCatalog): Promise<void> {
 }
 
 function hashPassword(password: string): string {
-  return crypto.createHash("sha256").update(password).digest("hex");
+  const salt = crypto.randomBytes(16).toString("hex");
+  const derived = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `scrypt:${salt}:${derived}`;
+}
+
+function verifyPassword(password: string, stored: string): boolean {
+  if (stored.startsWith("scrypt:")) {
+    const parts = stored.split(":");
+    if (parts.length !== 3) return false;
+    const salt = parts[1]!;
+    const hash = parts[2]!;
+    const derived = crypto.scryptSync(password, salt, 64).toString("hex");
+    const derivedBuf = Buffer.from(derived, "hex");
+    const hashBuf = Buffer.from(hash, "hex");
+    if (derivedBuf.length !== hashBuf.length) return false;
+    return crypto.timingSafeEqual(derivedBuf, hashBuf);
+  }
+  // Legacy SHA-256 fallback for any pre-existing actors (deprecated; will be removed once all accounts migrate)
+  const legacy = crypto.createHash("sha256").update(password).digest("hex");
+  const legacyBuf = Buffer.from(legacy, "hex");
+  const storedBuf = Buffer.from(stored, "hex");
+  if (legacyBuf.length !== storedBuf.length) return false;
+  return crypto.timingSafeEqual(legacyBuf, storedBuf);
 }
 
 export function validateSignupInput(input: unknown): SignupInput {
@@ -132,7 +154,7 @@ export async function createActor(input: unknown): Promise<ActorRecord> {
 
   const now = new Date().toISOString();
   const actor: ActorRecord = {
-    id: `actor_${Math.random().toString(36).slice(2, 10)}`,
+    id: `actor_${crypto.randomBytes(8).toString("hex")}`,
     username: validated.username,
     passwordHash: hashPassword(validated.password),
     ...(validated.displayName !== undefined && { displayName: validated.displayName }),
@@ -149,8 +171,7 @@ export async function authenticateActor(input: unknown): Promise<ActorRecord> {
   const actor = await getActorByUsername(validated.username);
   if (!actor) throw new Error("Invalid actor credentials.");
 
-  const incomingHash = hashPassword(validated.password);
-  if (incomingHash !== actor.passwordHash) {
+  if (!verifyPassword(validated.password, actor.passwordHash)) {
     throw new Error("Invalid actor credentials.");
   }
 
