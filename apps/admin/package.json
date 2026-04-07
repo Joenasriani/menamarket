@@ -7,7 +7,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "build:app": "next build",
-    "build:vercel": "next build",
+    "build:vercel": "cd ../.. && npm install && npm run build:packages && cd apps/admin && next build",
     "start": "next start -p 3001"
   },
   "dependencies": {
