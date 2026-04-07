@@ -16,13 +16,11 @@ import type { NextRequest } from "next/server";
 const ADMIN_SESSION_COOKIE = "menamarket_admin_session";
 
 function isProtectedAdminPath(pathname: string): boolean {
+  // Allow the login page and admin-auth API endpoints through without a session.
+  // Every other route in this app is an admin-only surface and requires auth.
   if (pathname === "/login") return false;
   if (pathname.startsWith("/api/admin-auth/")) return false;
-  return pathname === "/" ||
-    pathname.startsWith("/market-ops") ||
-    pathname.startsWith("/audit") ||
-    pathname.startsWith("/api/market-") ||
-    pathname.startsWith("/api/audit");
+  return true;
 }
 
 async function hmacSign(data: string, secret: string): Promise<string> {
@@ -101,5 +99,14 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/market-ops/:path*", "/api/market-drafts", "/api/market-publish", "/api/market-actions"]
+  matcher: [
+    /*
+     * Match all request paths except static assets.
+     * The isProtectedAdminPath function above decides whether each matched
+     * path requires an authenticated session.
+     * Excluded: _next/static, _next/image, favicon.ico, and files with
+     * common static extensions (images, fonts, icons, robots, sitemap).
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)"
+  ]
 };
