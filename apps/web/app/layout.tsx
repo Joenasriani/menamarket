@@ -17,8 +17,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="shell">{children}</main>
         <footer className="footer">
           <div className="shell inline" style={{justifyContent: "space-between"}}>
-            <span>Staged MENAMarket prototype with public markets, auth, order books, ledger, matching, settlement, activity feed, and wallet rails.</span>
-            <span>Stage: M20 wallet rails abstraction</span>
+            <span>© {new Date().getFullYear()} MENAMarket — MENA-focused prediction market infrastructure</span>
+            <span style={{display: "flex", gap: 16}}>
+              <a href="/about">About</a>
+              <a href="/compliance">Compliance</a>
+              <a href="/markets">Markets</a>
+            </span>
           </div>
         </footer>
       </body>

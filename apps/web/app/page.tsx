@@ -1,57 +1,95 @@
-import { Badge, Button, Card, EmptyState, ErrorState, PageHeader, TableShell } from "@menamarket/ui";
+import { Badge, Button, Card, PageHeader, TableShell } from "@menamarket/ui";
+
+export const dynamic = "force-dynamic";
+
+import { listPublicMarkets } from "@menamarket/api";
 
 const featureRows = [
-  { area: "Market Operations", current: "Question standards, policy notes, legal gating, and admin preparation", next: "Structured market drafting and review" },
-  { area: "Trading Core", current: "Architecture and shell only", next: "Order book and market pages in later modules" },
-  { area: "Compliance", current: "Jurisdiction-first product framing", next: "Rule engine, geography controls, and logging" }
+  { area: "Market Discovery", current: "Live catalog with search, filters, and faceted browsing", status: "Active" },
+  { area: "Trading Infrastructure", current: "Order book, matching engine, fills, and ledger", status: "Active" },
+  { area: "Settlement & Resolution", current: "Market resolution pipeline and settlement flow", status: "Active" },
+  { area: "Authentication", current: "Actor signup, login, session management", status: "Active" },
+  { area: "Wallet Rails", current: "Funding intents and payout request capture", status: "Active" },
+  { area: "Admin Operations", current: "Draft creation, review, publish, lifecycle, audit", status: "Active" }
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const markets = await listPublicMarkets();
+  const openCount = markets.filter((m) => m.status === "open").length;
+  const categories = [...new Set(markets.map((m) => m.category))];
+  const jurisdictions = [...new Set(markets.map((m) => m.jurisdiction))];
+
   return (
     <div className="stack">
       <section className="hero">
         <div className="hero-copy">
-          <Badge tone="accent">MENA-first market infrastructure</Badge>
-          <h1>Build a serious market product without fake signals.</h1>
+          <Badge tone="accent">MENA-focused prediction markets</Badge>
+          <h1>Real markets. Real infrastructure. No fake signals.</h1>
           <p>
-            MENAMarket starts with governance, shell architecture, and a controlled product surface.
-            This stage intentionally avoids fabricated prices, mock portfolio balances, and decorative order books.
+            MENAMarket is a prediction market platform built for the MENA region.
+            Browse live markets spanning finance, technology, infrastructure, economics, and sports
+            across Saudi Arabia, UAE, Egypt, Qatar, Morocco, Jordan, and the GCC.
           </p>
           <div className="pill-row">
-            <Button href="/markets">Browse structure</Button>
-            <Button href="/compliance" variant="secondary">Review constraints</Button>
+            <Button href="/markets">Browse markets</Button>
+            <Button href="/signup" variant="secondary">Create account</Button>
           </div>
           <div className="stats-grid">
-            <Card title="Surface ready" eyebrow="Web shell">Distinct brand, reusable components, responsive layouts, and stable page structure.</Card>
-            <Card title="Admin shell" eyebrow="Operations">Internal navigation for market operations planning without fake controls.</Card>
-            <Card title="Next focus" eyebrow="Module flow">Market catalog and event pages after shell hardening.</Card>
+            <Card title={`${openCount} open`} eyebrow="Live markets">
+              Active prediction markets with real outcomes, pricing, and order books.
+            </Card>
+            <Card title={`${categories.length} categories`} eyebrow="Coverage">
+              {categories.join(", ")}.
+            </Card>
+            <Card title={`${jurisdictions.length} jurisdictions`} eyebrow="Regions">
+              {jurisdictions.join(", ")}.
+            </Card>
           </div>
         </div>
         <aside className="hero-panel stack">
-          <PageHeader eyebrow="Principles" title="No decorative trading theater" description="Every visible area in this stage is either structural, informative, or intentionally empty." />
-          <TableShell columns={["Area", "Current state", "Next module"]} rows={featureRows.map((row) => [row.area, row.current, row.next])} />
+          <PageHeader eyebrow="Platform capabilities" title="Full-stack market infrastructure" description="Every feature shown is backed by real data, validated schemas, and auditable operations." />
+          <TableShell columns={["Area", "Description", "Status"]} rows={featureRows.map((row) => [row.area, row.current, row.status])} />
         </aside>
       </section>
 
       <section className="section">
         <div className="section-header">
-          <h2>Foundation areas</h2>
-          <p>These sections are intentionally product-real, but feature-light until the corresponding modules are implemented.</p>
+          <h2>Explore the platform</h2>
+          <p>Browse markets, track activity, manage your portfolio, and fund your account — all built on auditable infrastructure.</p>
         </div>
         <div className="card-grid">
-          <Card title="Markets" eyebrow="Public navigation">Structured routes for market discovery without fake listings.</Card>
-          <Card title="Portfolio" eyebrow="Account surface">A real route reserved for future authenticated positions and activity.</Card>
-          <Card title="Compliance" eyebrow="Operational discipline">Product framing starts with geography, regulation, and control requirements.</Card>
+          <Card title="Markets" eyebrow="Discovery">
+            Search and filter prediction markets by category, jurisdiction, and status. View outcomes, probabilities, and order books.
+            <div style={{marginTop: 16}}><a href="/markets" style={{color: "var(--mm-accent)"}}>Browse all markets →</a></div>
+          </Card>
+          <Card title="Portfolio" eyebrow="Positions">
+            Sign in to view your open positions, pending orders, and account activity in one place.
+            <div style={{marginTop: 16}}><a href="/portfolio" style={{color: "var(--mm-accent)"}}>View portfolio →</a></div>
+          </Card>
+          <Card title="Activity feed" eyebrow="Live updates">
+            Track real-time market activity including new orders, fills, and market state changes.
+            <div style={{marginTop: 16}}><a href="/activity" style={{color: "var(--mm-accent)"}}>View activity →</a></div>
+          </Card>
         </div>
       </section>
 
-      <section className="section info-grid">
-        <EmptyState title="No live markets yet" description="Market listings will appear only after the market catalog and event-page modules are implemented." action={<Button href="/markets" variant="secondary">Open markets route</Button>} />
-        <ErrorState title="No execution engine enabled" description="Trading, settlement, and wallet actions remain disabled until the matching and contract layers exist." />
-        <Card title="What you can review now" eyebrow="Current utility">
-          Layout quality, navigation flow, design tokens, shared components, and route structure.
-          <div style={{marginTop: 16}}><a href="/about">Read the product framing →</a></div>
-        </Card>
+      <section className="section">
+        <div className="section-header">
+          <h2>Built with integrity</h2>
+          <p>Every component is backed by real data, validated schemas, and compliance-first design. No decorative trading theater.</p>
+        </div>
+        <div className="card-grid">
+          <Card title="Schema-validated data" eyebrow="Data integrity">
+            All markets, orders, fills, and ledger entries are validated against JSON schemas before persistence.
+          </Card>
+          <Card title="Auditable operations" eyebrow="Transparency">
+            Every admin action — market creation, publishing, lifecycle changes — is logged with full audit trails.
+          </Card>
+          <Card title="Compliance-first" eyebrow="Governance">
+            Jurisdiction tracking, resolution sources, and market rules are required fields — not optional metadata.
+            <div style={{marginTop: 16}}><a href="/compliance" style={{color: "var(--mm-accent)"}}>Review constraints →</a></div>
+          </Card>
+        </div>
       </section>
     </div>
   );

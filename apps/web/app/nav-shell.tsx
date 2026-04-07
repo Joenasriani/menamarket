@@ -11,19 +11,15 @@ type SessionResponse = {
 };
 
 const guestNavItems = [
-  ["Home", "/"],
   ["Markets", "/markets"],
   ["Activity", "/activity"],
   ["Funding", "/funding"],
   ["Portfolio", "/portfolio"],
-  ["Login", "/login"],
-  ["Signup", "/signup"],
   ["Compliance", "/compliance"],
   ["About", "/about"]
 ] as const;
 
 const signedInNavItems = [
-  ["Home", "/"],
   ["Markets", "/markets"],
   ["Activity", "/activity"],
   ["Funding", "/funding"],
@@ -35,6 +31,7 @@ const signedInNavItems = [
 export function NavShell() {
   const [session, setSession] = useState<SessionResponse["session"]>(null);
   const [loaded, setLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -68,16 +65,30 @@ export function NavShell() {
         <span className="brand-mark" aria-hidden="true" />
         <span>MENAMarket</span>
       </a>
-      <nav className="nav-links" aria-label="Primary navigation">
+      <button
+        className="hamburger"
+        onClick={() => setMenuOpen(!menuOpen)}
+        type="button"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpen}
+      >
+        <span className={`hamburger-bar ${menuOpen ? "hamburger-bar--open" : ""}`} />
+      </button>
+      <nav className={`nav-links ${menuOpen ? "nav-links--open" : ""}`} aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
-          <a className="nav-link" key={href} href={href}>
+          <a className="nav-link" key={href} href={href} onClick={() => setMenuOpen(false)}>
             {label}
           </a>
         ))}
         {loaded && session ? (
           <>
-            <span className="nav-link" aria-label="Signed in actor">@{session.username}</span>
+            <span className="nav-link nav-link--user" aria-label="Signed in actor">@{session.username}</span>
             <button className="nav-link nav-button" onClick={signOut} type="button">Sign out</button>
+          </>
+        ) : loaded && !session ? (
+          <>
+            <a className="nav-link nav-link--auth" href="/login" onClick={() => setMenuOpen(false)}>Log in</a>
+            <a className="nav-link nav-link--signup" href="/signup" onClick={() => setMenuOpen(false)}>Sign up</a>
           </>
         ) : null}
       </nav>
