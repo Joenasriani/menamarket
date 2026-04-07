@@ -1,3 +1,68 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "id": "audit_001",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_sa_ipo_2026",
+      "timestampIso": "2026-02-20T10:05:00.000Z",
+      "metadata": { "slug": "saudi-aramco-secondary-ipo-2026", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_002",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_uae_ai_hub",
+      "timestampIso": "2026-03-08T09:10:00.000Z",
+      "metadata": { "slug": "uae-top-3-global-ai-index-2026", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_003",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_neom_phase1",
+      "timestampIso": "2026-02-06T08:15:00.000Z",
+      "metadata": { "slug": "neom-the-line-phase-1-completion-2027", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_004",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_egypt_rate",
+      "timestampIso": "2026-03-18T12:10:00.000Z",
+      "metadata": { "slug": "egypt-central-bank-rate-cut-q3-2026", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_005",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_qatar_wc_bid",
+      "timestampIso": "2026-03-23T10:05:00.000Z",
+      "metadata": { "slug": "qatar-fifa-club-world-cup-host-2029", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_006",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_morocco_gdp",
+      "timestampIso": "2026-02-26T08:20:00.000Z",
+      "metadata": { "slug": "morocco-gdp-growth-above-4-pct-2026", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_007",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_gcc_currency",
+      "timestampIso": "2026-02-16T08:10:00.000Z",
+      "metadata": { "slug": "gcc-common-currency-announcement-2027", "publishedBy": "admin" }
+    },
+    {
+      "id": "audit_008",
+      "action": "draft_published",
+      "targetType": "market_draft",
+      "targetId": "mkt_jordan_tech",
+      "timestampIso": "2026-03-13T09:15:00.000Z",
+      "metadata": { "slug": "jordan-tech-startup-exits-above-500m-2026", "publishedBy": "admin" }
+    }
+  ]
 }

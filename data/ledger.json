@@ -1,3 +1,38 @@
 {
-  "accounts": []
+  "accounts": [
+    {
+      "actorId": "actor_seed_01",
+      "cashBalance": 850,
+      "cashReserved": 150,
+      "holdings": [
+        {
+          "marketSlug": "saudi-aramco-secondary-ipo-2026",
+          "outcomeId": "out_yes_1",
+          "quantity": 25,
+          "reservedQuantity": 0
+        },
+        {
+          "marketSlug": "egypt-central-bank-rate-cut-q3-2026",
+          "outcomeId": "out_yes_4",
+          "quantity": 50,
+          "reservedQuantity": 0
+        }
+      ],
+      "updatedAtIso": "2026-04-05T10:00:00.000Z"
+    },
+    {
+      "actorId": "actor_seed_02",
+      "cashBalance": 920,
+      "cashReserved": 80,
+      "holdings": [],
+      "updatedAtIso": "2026-04-05T11:30:00.000Z"
+    },
+    {
+      "actorId": "actor_seed_03",
+      "cashBalance": 1008.75,
+      "cashReserved": 0,
+      "holdings": [],
+      "updatedAtIso": "2026-04-04T08:45:00.000Z"
+    }
+  ]
 }

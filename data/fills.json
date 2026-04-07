@@ -1,3 +1,28 @@
 {
-  "fills": []
+  "fills": [
+    {
+      "id": "fill_001",
+      "marketSlug": "saudi-aramco-secondary-ipo-2026",
+      "outcomeId": "out_yes_1",
+      "buyOrderId": "ord_001",
+      "sellOrderId": "ord_003",
+      "buyActorId": "actor_seed_01",
+      "sellActorId": "actor_seed_03",
+      "quantity": 25,
+      "price": 0.35,
+      "createdAtIso": "2026-04-02T09:00:01.000Z"
+    },
+    {
+      "id": "fill_002",
+      "marketSlug": "egypt-central-bank-rate-cut-q3-2026",
+      "outcomeId": "out_yes_4",
+      "buyOrderId": "ord_004",
+      "sellOrderId": "ord_fill_sell_01",
+      "buyActorId": "actor_seed_01",
+      "sellActorId": "actor_seed_03",
+      "quantity": 50,
+      "price": 0.56,
+      "createdAtIso": "2026-04-03T15:20:05.000Z"
+    }
+  ]
 }
