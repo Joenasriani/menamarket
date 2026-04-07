@@ -1,3 +1,228 @@
 {
-  "markets": []
+  "markets": [
+    {
+      "id": "mkt_sa_ipo_2026",
+      "slug": "saudi-aramco-secondary-ipo-2026",
+      "question": "Will Saudi Aramco complete a secondary IPO on Tadawul before December 31, 2026?",
+      "category": "Finance",
+      "description": "Tracks whether Saudi Aramco will list additional shares on the Saudi stock exchange (Tadawul) in a secondary public offering before year-end 2026.",
+      "resolutionSource": "Tadawul official exchange filings",
+      "closeTimeIso": "2026-12-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "SAU",
+      "visibility": "public",
+      "createdAtIso": "2026-02-20T10:00:00.000Z",
+      "updatedAtIso": "2026-04-05T14:00:00.000Z",
+      "rules": [
+        "Resolves YES if Tadawul confirms a secondary offering of any size before close time.",
+        "Resolves NO if no filing or confirmation is published by close time.",
+        "A private placement does not count as an IPO for this market."
+      ],
+      "resolutionTitle": "Secondary offering confirmation",
+      "resolutionBasis": "Official Tadawul filing or Saudi CMA announcement",
+      "resolutionExamples": [
+        "YES if Aramco files a prospectus for secondary shares on Tadawul.",
+        "NO if no secondary offering occurs by December 31, 2026."
+      ],
+      "outcomeType": "binary",
+      "sourceLink": "https://www.tadawul.com.sa",
+      "outcomes": [
+        { "id": "out_yes_1", "label": "Yes", "probability": 0.35, "price": 0.35 },
+        { "id": "out_no_1", "label": "No", "probability": 0.65, "price": 0.65 }
+      ],
+      "priceUpdatedAtIso": "2026-04-06T12:00:00.000Z"
+    },
+    {
+      "id": "mkt_uae_ai_hub",
+      "slug": "uae-top-3-global-ai-index-2026",
+      "question": "Will the UAE rank in the top 3 of the Global AI Index by end of 2026?",
+      "category": "Technology",
+      "description": "Evaluates whether the United Arab Emirates will achieve a top-3 ranking in the annual Global AI Index published by Tortoise Media.",
+      "resolutionSource": "Tortoise Media Global AI Index",
+      "closeTimeIso": "2026-12-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "ARE",
+      "visibility": "public",
+      "createdAtIso": "2026-03-08T09:00:00.000Z",
+      "updatedAtIso": "2026-04-04T11:00:00.000Z",
+      "rules": [
+        "Resolves YES if the UAE is ranked 1st, 2nd, or 3rd in the Tortoise Global AI Index 2026 edition.",
+        "Resolves NO if the UAE is ranked 4th or lower.",
+        "If the index is not published in 2026, market resolves NO."
+      ],
+      "resolutionTitle": "UAE AI ranking result",
+      "resolutionBasis": "Tortoise Media Global AI Index 2026 publication",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_2", "label": "Yes", "probability": 0.22, "price": 0.22 },
+        { "id": "out_no_2", "label": "No", "probability": 0.78, "price": 0.78 }
+      ],
+      "priceUpdatedAtIso": "2026-04-06T08:00:00.000Z"
+    },
+    {
+      "id": "mkt_neom_phase1",
+      "slug": "neom-the-line-phase-1-completion-2027",
+      "question": "Will NEOM The Line complete Phase 1 construction milestones by Q4 2027?",
+      "category": "Infrastructure",
+      "description": "Tracks whether the NEOM megaproject in Saudi Arabia achieves its Phase 1 construction milestones, including initial residential and commercial structures within The Line.",
+      "resolutionSource": "NEOM official project updates and Saudi PIF reports",
+      "closeTimeIso": "2027-12-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "SAU",
+      "visibility": "public",
+      "createdAtIso": "2026-02-06T08:00:00.000Z",
+      "updatedAtIso": "2026-04-02T15:00:00.000Z",
+      "rules": [
+        "Resolves YES if NEOM or the Saudi PIF confirms Phase 1 completion by Q4 2027.",
+        "Resolves NO if official reports indicate Phase 1 is incomplete or delayed past Q4 2027.",
+        "Partial completion does not satisfy this market."
+      ],
+      "resolutionTitle": "Phase 1 construction milestone",
+      "resolutionBasis": "NEOM official announcements or PIF quarterly reports",
+      "resolutionExamples": [
+        "YES if NEOM announces Phase 1 complete with residents moving in.",
+        "NO if construction delays push Phase 1 past December 2027."
+      ],
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_3", "label": "Yes", "probability": 0.18, "price": 0.18 },
+        { "id": "out_no_3", "label": "No", "probability": 0.82, "price": 0.82 }
+      ],
+      "priceUpdatedAtIso": "2026-04-05T10:00:00.000Z"
+    },
+    {
+      "id": "mkt_egypt_rate",
+      "slug": "egypt-central-bank-rate-cut-q3-2026",
+      "question": "Will the Central Bank of Egypt cut interest rates in Q3 2026?",
+      "category": "Finance",
+      "description": "Predicts whether the Central Bank of Egypt (CBE) will reduce its key overnight lending rate during Q3 2026 (July-September).",
+      "resolutionSource": "Central Bank of Egypt monetary policy decisions",
+      "closeTimeIso": "2026-09-30T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "EGY",
+      "visibility": "public",
+      "createdAtIso": "2026-03-18T12:00:00.000Z",
+      "updatedAtIso": "2026-04-06T09:00:00.000Z",
+      "rules": [
+        "Resolves YES if the CBE reduces the overnight lending rate at any meeting in Q3 2026.",
+        "Resolves NO if rates remain unchanged or increase during Q3 2026.",
+        "Only the overnight lending rate is considered."
+      ],
+      "resolutionTitle": "CBE rate decision Q3 2026",
+      "resolutionBasis": "Central Bank of Egypt press release after monetary policy meetings",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_4", "label": "Yes", "probability": 0.58, "price": 0.58 },
+        { "id": "out_no_4", "label": "No", "probability": 0.42, "price": 0.42 }
+      ],
+      "priceUpdatedAtIso": "2026-04-06T14:00:00.000Z"
+    },
+    {
+      "id": "mkt_qatar_wc_bid",
+      "slug": "qatar-fifa-club-world-cup-host-2029",
+      "question": "Will Qatar be selected to host the FIFA Club World Cup 2029?",
+      "category": "Sports",
+      "description": "Tracks whether Qatar will be announced as the host nation for the expanded FIFA Club World Cup 2029 tournament.",
+      "resolutionSource": "FIFA official announcements",
+      "closeTimeIso": "2027-06-30T23:59:59.000Z",
+      "status": "scheduled",
+      "jurisdiction": "QAT",
+      "visibility": "public",
+      "createdAtIso": "2026-03-23T10:00:00.000Z",
+      "updatedAtIso": "2026-04-03T08:00:00.000Z",
+      "rules": [
+        "Resolves YES if FIFA officially announces Qatar as the 2029 Club World Cup host.",
+        "Resolves NO if FIFA selects another nation or the tournament is cancelled.",
+        "Co-hosting counts as YES only if Qatar is listed as a primary host."
+      ],
+      "resolutionTitle": "FIFA host selection",
+      "resolutionBasis": "FIFA Council official decision",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_5", "label": "Yes", "probability": 0.30, "price": 0.30 },
+        { "id": "out_no_5", "label": "No", "probability": 0.70, "price": 0.70 }
+      ]
+    },
+    {
+      "id": "mkt_morocco_gdp",
+      "slug": "morocco-gdp-growth-above-4-pct-2026",
+      "question": "Will Morocco achieve GDP growth above 4% in 2026?",
+      "category": "Economics",
+      "description": "Predicts whether Morocco's real GDP growth rate for the full year 2026 will exceed 4% as reported by the Haut-Commissariat au Plan.",
+      "resolutionSource": "Morocco Haut-Commissariat au Plan annual GDP report",
+      "closeTimeIso": "2027-03-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "MAR",
+      "visibility": "public",
+      "createdAtIso": "2026-02-26T08:00:00.000Z",
+      "updatedAtIso": "2026-04-01T12:00:00.000Z",
+      "rules": [
+        "Resolves YES if the official 2026 GDP growth exceeds 4.0%.",
+        "Resolves NO if growth is 4.0% or below.",
+        "Only the HCP official annual figure is used, not preliminary estimates."
+      ],
+      "resolutionTitle": "Morocco GDP 2026 growth rate",
+      "resolutionBasis": "Haut-Commissariat au Plan annual GDP publication",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_6", "label": "Yes", "probability": 0.42, "price": 0.42 },
+        { "id": "out_no_6", "label": "No", "probability": 0.58, "price": 0.58 }
+      ],
+      "priceUpdatedAtIso": "2026-04-04T15:00:00.000Z"
+    },
+    {
+      "id": "mkt_gcc_currency",
+      "slug": "gcc-common-currency-announcement-2027",
+      "question": "Will the GCC announce a common currency framework by end of 2027?",
+      "category": "Finance",
+      "description": "Tracks whether the Gulf Cooperation Council member states will jointly announce a formal framework or timeline for a common currency by December 31, 2027.",
+      "resolutionSource": "GCC Secretariat or member state central bank joint statements",
+      "closeTimeIso": "2027-12-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "GCC",
+      "visibility": "public",
+      "createdAtIso": "2026-02-16T08:00:00.000Z",
+      "updatedAtIso": "2026-03-28T11:00:00.000Z",
+      "rules": [
+        "Resolves YES if GCC members jointly announce a common currency framework or binding timeline.",
+        "Resolves NO if no joint announcement is made by close time.",
+        "Informal discussions or non-binding communiques do not count."
+      ],
+      "resolutionTitle": "GCC common currency framework",
+      "resolutionBasis": "GCC Secretariat official announcements",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_7", "label": "Yes", "probability": 0.08, "price": 0.08 },
+        { "id": "out_no_7", "label": "No", "probability": 0.92, "price": 0.92 }
+      ],
+      "priceUpdatedAtIso": "2026-04-02T09:00:00.000Z"
+    },
+    {
+      "id": "mkt_jordan_tech",
+      "slug": "jordan-tech-startup-exits-above-500m-2026",
+      "question": "Will total Jordanian tech startup exits exceed USD 500M in 2026?",
+      "category": "Technology",
+      "description": "Predicts whether the aggregate value of Jordanian tech startup acquisitions, IPOs, and secondary sales in 2026 will surpass 500 million USD.",
+      "resolutionSource": "MAGNiTT or Wamda Capital annual MENA startup reports",
+      "closeTimeIso": "2027-03-31T23:59:59.000Z",
+      "status": "open",
+      "jurisdiction": "JOR",
+      "visibility": "public",
+      "createdAtIso": "2026-03-13T09:00:00.000Z",
+      "updatedAtIso": "2026-03-31T10:00:00.000Z",
+      "rules": [
+        "Resolves YES if total reported exit value exceeds USD 500M.",
+        "Resolves NO if total is USD 500M or below.",
+        "Uses the first major industry report published after year-end (MAGNiTT or Wamda)."
+      ],
+      "resolutionTitle": "Jordan tech exits total 2026",
+      "resolutionBasis": "MAGNiTT or Wamda annual MENA venture report",
+      "outcomeType": "binary",
+      "outcomes": [
+        { "id": "out_yes_8", "label": "Yes", "probability": 0.15, "price": 0.15 },
+        { "id": "out_no_8", "label": "No", "probability": 0.85, "price": 0.85 }
+      ],
+      "priceUpdatedAtIso": "2026-04-04T08:00:00.000Z"
+    }
+  ]
 }

@@ -1,3 +1,100 @@
 {
-  "orders": []
+  "orders": [
+    {
+      "id": "ord_001",
+      "marketSlug": "saudi-aramco-secondary-ipo-2026",
+      "actorId": "actor_seed_01",
+      "outcomeId": "out_yes_1",
+      "side": "buy",
+      "quantity": 50,
+      "limitPrice": 0.33,
+      "status": "open",
+      "createdAtIso": "2026-04-01T10:15:00.000Z",
+      "updatedAtIso": "2026-04-01T10:15:00.000Z"
+    },
+    {
+      "id": "ord_002",
+      "marketSlug": "saudi-aramco-secondary-ipo-2026",
+      "actorId": "actor_seed_02",
+      "outcomeId": "out_no_1",
+      "side": "buy",
+      "quantity": 100,
+      "limitPrice": 0.64,
+      "status": "open",
+      "createdAtIso": "2026-04-01T11:30:00.000Z",
+      "updatedAtIso": "2026-04-01T11:30:00.000Z"
+    },
+    {
+      "id": "ord_003",
+      "marketSlug": "saudi-aramco-secondary-ipo-2026",
+      "actorId": "actor_seed_03",
+      "outcomeId": "out_yes_1",
+      "side": "sell",
+      "quantity": 25,
+      "limitPrice": 0.37,
+      "status": "open",
+      "createdAtIso": "2026-04-02T09:00:00.000Z",
+      "updatedAtIso": "2026-04-02T09:00:00.000Z"
+    },
+    {
+      "id": "ord_004",
+      "marketSlug": "egypt-central-bank-rate-cut-q3-2026",
+      "actorId": "actor_seed_01",
+      "outcomeId": "out_yes_4",
+      "side": "buy",
+      "quantity": 200,
+      "limitPrice": 0.56,
+      "status": "open",
+      "createdAtIso": "2026-04-03T14:00:00.000Z",
+      "updatedAtIso": "2026-04-03T14:00:00.000Z"
+    },
+    {
+      "id": "ord_005",
+      "marketSlug": "egypt-central-bank-rate-cut-q3-2026",
+      "actorId": "actor_seed_02",
+      "outcomeId": "out_no_4",
+      "side": "buy",
+      "quantity": 150,
+      "limitPrice": 0.40,
+      "status": "open",
+      "createdAtIso": "2026-04-03T15:20:00.000Z",
+      "updatedAtIso": "2026-04-03T15:20:00.000Z"
+    },
+    {
+      "id": "ord_006",
+      "marketSlug": "uae-top-3-global-ai-index-2026",
+      "actorId": "actor_seed_03",
+      "outcomeId": "out_yes_2",
+      "side": "buy",
+      "quantity": 75,
+      "limitPrice": 0.20,
+      "status": "open",
+      "createdAtIso": "2026-04-04T08:45:00.000Z",
+      "updatedAtIso": "2026-04-04T08:45:00.000Z"
+    },
+    {
+      "id": "ord_007",
+      "marketSlug": "morocco-gdp-growth-above-4-pct-2026",
+      "actorId": "actor_seed_01",
+      "outcomeId": "out_yes_6",
+      "side": "buy",
+      "quantity": 120,
+      "limitPrice": 0.40,
+      "status": "open",
+      "createdAtIso": "2026-04-05T10:00:00.000Z",
+      "updatedAtIso": "2026-04-05T10:00:00.000Z"
+    },
+    {
+      "id": "ord_008",
+      "marketSlug": "morocco-gdp-growth-above-4-pct-2026",
+      "actorId": "actor_seed_02",
+      "outcomeId": "out_no_6",
+      "side": "sell",
+      "quantity": 80,
+      "limitPrice": 0.55,
+      "status": "open",
+      "createdAtIso": "2026-04-05T11:30:00.000Z",
+      "updatedAtIso": "2026-04-05T11:30:00.000Z"
+    }
+  ]
 }
