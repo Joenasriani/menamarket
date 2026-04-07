@@ -20,27 +20,30 @@ export async function listActivityFeed(filters: ActivityFeedFilters = {}): Promi
   const [auditEntries, orders, fills, settlements] = await Promise.all([
     listAuditEntries(filters.marketSlug ? { q: filters.marketSlug } : {}),
     listOrders({
-      marketSlug: filters.marketSlug,
-      actorId: filters.actorId
+      ...(filters.marketSlug !== undefined && { marketSlug: filters.marketSlug }),
+      ...(filters.actorId !== undefined && { actorId: filters.actorId })
     }),
     listFills({
-      marketSlug: filters.marketSlug,
-      actorId: filters.actorId
+      ...(filters.marketSlug !== undefined && { marketSlug: filters.marketSlug }),
+      ...(filters.actorId !== undefined && { actorId: filters.actorId })
     }),
     listSettlements({
-      marketSlug: filters.marketSlug,
-      actorId: filters.actorId
+      ...(filters.marketSlug !== undefined && { marketSlug: filters.marketSlug }),
+      ...(filters.actorId !== undefined && { actorId: filters.actorId })
     })
   ]);
 
-  const auditItems: ActivityFeedItem[] = auditEntries.map((entry) => ({
-    id: `audit:${entry.id}`,
-    type: "audit",
-    marketSlug: typeof entry.metadata.slug === "string" ? entry.metadata.slug : undefined,
-    title: entry.action,
-    detail: `Target ${entry.targetType}:${entry.targetId}`,
-    timestampIso: entry.timestampIso
-  }));
+  const auditItems: ActivityFeedItem[] = auditEntries.map((entry) => {
+    const marketSlug = typeof entry.metadata.slug === "string" ? entry.metadata.slug : undefined;
+    return {
+      id: `audit:${entry.id}`,
+      type: "audit" as const,
+      ...(marketSlug !== undefined && { marketSlug }),
+      title: entry.action,
+      detail: `Target ${entry.targetType}:${entry.targetId}`,
+      timestampIso: entry.timestampIso
+    };
+  });
 
   const orderItems: ActivityFeedItem[] = orders.map((order) => ({
     id: `order:${order.id}`,

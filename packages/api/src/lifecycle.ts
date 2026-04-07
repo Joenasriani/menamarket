@@ -131,10 +131,10 @@ export function validateLifecycleActionInput(input: unknown): LifecycleActionInp
   return {
     slug: value.slug,
     action: value.action as LifecycleAction,
-    outcome: value.outcome as string | undefined,
-    evidence: value.evidence as string | undefined,
-    sourceLink: value.sourceLink as string | undefined,
-    resolvedAtIso: value.resolvedAtIso as string | undefined
+    ...(value.outcome !== undefined && { outcome: value.outcome as string }),
+    ...(value.evidence !== undefined && { evidence: value.evidence as string }),
+    ...(value.sourceLink !== undefined && { sourceLink: value.sourceLink as string }),
+    ...(value.resolvedAtIso !== undefined && { resolvedAtIso: value.resolvedAtIso as string })
   };
 }
 
@@ -157,7 +157,7 @@ export async function applyLifecycleAction(input: unknown): Promise<{ before: Ma
     throw new Error("Market not found.");
   }
 
-  const market = catalog.markets[marketIndex];
+  const market = catalog.markets[marketIndex]!
   const allowed = allowedLifecycleActions(market.status);
 
   if (!allowed.includes(validated.action)) {
@@ -191,11 +191,7 @@ export async function applyLifecycleAction(input: unknown): Promise<{ before: Ma
     });
   }
 
-  const updatedMarket: MarketCatalogRecord = {
-    ...market,
-    status: after,
-    updatedAtIso: new Date().toISOString()
-  };
+  const updatedMarket = { ...market, status: after, updatedAtIso: new Date().toISOString() } as MarketCatalogRecord;
 
   const nextCatalog: MarketCatalog = {
     markets: catalog.markets.map((item, index) => index === marketIndex ? updatedMarket : item)
@@ -218,5 +214,5 @@ export async function applyLifecycleAction(input: unknown): Promise<{ before: Ma
     }
   });
 
-  return { before, after, market: updatedMarket, resolution };
+  return { before, after, market: updatedMarket, ...(resolution !== undefined && { resolution }) };
 }

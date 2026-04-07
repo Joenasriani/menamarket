@@ -5,10 +5,10 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const filters = {
-      action: url.searchParams.get("action") ?? undefined,
-      targetType: url.searchParams.get("targetType") ?? undefined,
-      targetId: url.searchParams.get("targetId") ?? undefined,
-      q: url.searchParams.get("q") ?? undefined
+      ...(url.searchParams.get("action") !== null && { action: url.searchParams.get("action")! }),
+      ...(url.searchParams.get("targetType") !== null && { targetType: url.searchParams.get("targetType")! }),
+      ...(url.searchParams.get("targetId") !== null && { targetId: url.searchParams.get("targetId")! }),
+      ...(url.searchParams.get("q") !== null && { q: url.searchParams.get("q")! })
     };
 
     const [entries, summary] = await Promise.all([

@@ -116,7 +116,7 @@ function parseMarketRecord(input: unknown, index: number): MarketCatalogRecord {
     slug: record.slug,
     question: record.question,
     category: record.category,
-    description: record.description as string | undefined,
+    ...(record.description !== undefined && { description: record.description as string }),
     resolutionSource: record.resolutionSource,
     closeTimeIso: record.closeTimeIso,
     status: record.status as MarketStatus,
@@ -124,15 +124,15 @@ function parseMarketRecord(input: unknown, index: number): MarketCatalogRecord {
     visibility: record.visibility,
     createdAtIso: record.createdAtIso,
     updatedAtIso: record.updatedAtIso,
-    notes: record.notes as string | undefined,
+    ...(record.notes !== undefined && { notes: record.notes as string }),
     rules: record.rules as string[],
     resolutionTitle: record.resolutionTitle,
     resolutionBasis: record.resolutionBasis,
-    resolutionExamples: record.resolutionExamples as string[] | undefined,
+    ...(record.resolutionExamples !== undefined && { resolutionExamples: record.resolutionExamples as string[] }),
     outcomeType: record.outcomeType as OutcomeType,
-    sourceLink: record.sourceLink as string | undefined,
+    ...(record.sourceLink !== undefined && { sourceLink: record.sourceLink as string }),
     outcomes: record.outcomes as MarketOutcomeRecord[],
-    priceUpdatedAtIso: record.priceUpdatedAtIso as string | undefined
+    ...(record.priceUpdatedAtIso !== undefined && { priceUpdatedAtIso: record.priceUpdatedAtIso as string })
   };
 }
 

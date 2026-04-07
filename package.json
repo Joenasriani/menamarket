@@ -18,7 +18,8 @@
     "dev:admin": "npm --workspace @menamarket/admin run dev",
     "build:web": "npm --workspace @menamarket/web run build:app",
     "build:admin": "npm --workspace @menamarket/admin run build:app",
-    "build:packages": "npm --workspace @menamarket/ui run build && npm --workspace @menamarket/api run build"
+    "build:packages": "npm --workspace @menamarket/ui run build && npm --workspace @menamarket/api run build",
+    "build:vercel": "npm run build:packages && npm run lint && npm run typecheck && node --test tests/**/*.test.mjs && npm run build:web"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",

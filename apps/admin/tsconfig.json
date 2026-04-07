@@ -8,6 +8,8 @@
     "incremental": true,
     "rootDir": ".",
     "outDir": "dist",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "plugins": [{ "name": "next" }]
   },
   "include": [

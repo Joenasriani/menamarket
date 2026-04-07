@@ -70,7 +70,7 @@ export default async function MarketDetailPage({ params }: PageProps) {
         </Card>
       </div>
 
-      <AiMarketSummary slug={slug} question={market.question} description={market.description} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} />
+      <AiMarketSummary slug={slug} question={market.question} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} {...(market.description !== undefined && { description: market.description })} />
 
       {resolution ? (
         <Card title="Resolution record" eyebrow="Outcome">

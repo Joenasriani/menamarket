@@ -39,9 +39,9 @@ export default async function AuditPage({ searchParams }: { searchParams: Search
   const [summary, entries] = await Promise.all([
     auditFacetSummary(),
     listAuditEntries({
-      q: params.q,
-      action: params.action,
-      targetType: params.targetType
+      ...(params.q !== undefined && { q: params.q }),
+      ...(params.action !== undefined && { action: params.action }),
+      ...(params.targetType !== undefined && { targetType: params.targetType })
     })
   ]);
 

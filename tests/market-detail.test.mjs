@@ -21,7 +21,15 @@ test("validateMarketCatalog preserves a complete public record", () => {
         jurisdiction: "UAE",
         visibility: "public",
         createdAtIso: "2026-04-07T00:00:00.000Z",
-        updatedAtIso: "2026-04-07T00:00:00.000Z"
+        updatedAtIso: "2026-04-07T00:00:00.000Z",
+        rules: ["Resolve only according to the named source."],
+        resolutionTitle: "Official gazette resolution",
+        resolutionBasis: "Resolved per the official gazette publication.",
+        outcomeType: "binary",
+        outcomes: [
+          { id: "yes", label: "Yes", probability: 0.5, price: 0.5 },
+          { id: "no", label: "No", probability: 0.5, price: 0.5 }
+        ]
       }
     ]
   });

@@ -8,9 +8,9 @@ export async function GET(request: Request) {
     const limit = limitRaw ? Number.parseInt(limitRaw, 10) : undefined;
 
     const items = await listActivityFeed({
-      marketSlug: url.searchParams.get("marketSlug") ?? undefined,
-      actorId: url.searchParams.get("actorId") ?? undefined,
-      limit
+      ...(url.searchParams.get("marketSlug") !== null && { marketSlug: url.searchParams.get("marketSlug")! }),
+      ...(url.searchParams.get("actorId") !== null && { actorId: url.searchParams.get("actorId")! }),
+      ...(limit !== undefined && { limit })
     });
 
     return NextResponse.json(

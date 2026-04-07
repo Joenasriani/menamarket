@@ -143,8 +143,8 @@ export function validateFundingIntentInput(input: unknown): { actorId: string; a
   return {
     actorId: value.actorId,
     amount: value.amount,
-    railId: value.railId as string | undefined,
-    notes: value.notes as string | undefined
+    ...(value.railId !== undefined && { railId: value.railId as string }),
+    ...(value.notes !== undefined && { notes: value.notes as string })
   };
 }
 
@@ -161,8 +161,8 @@ export function validatePayoutRequestInput(input: unknown): { actorId: string; a
   return {
     actorId: value.actorId,
     amount: value.amount,
-    railId: value.railId as string | undefined,
-    notes: value.notes as string | undefined
+    ...(value.railId !== undefined && { railId: value.railId as string }),
+    ...(value.notes !== undefined && { notes: value.notes as string })
   };
 }
 
@@ -188,7 +188,7 @@ export async function createFundingIntent(input: unknown): Promise<FundingIntent
     amount: validated.amount,
     status: "requested",
     createdAtIso: new Date().toISOString(),
-    notes: validated.notes
+    ...(validated.notes !== undefined && { notes: validated.notes })
   };
 
   await writeRailsCatalog({
@@ -211,7 +211,7 @@ export async function createPayoutRequest(input: unknown): Promise<PayoutRequest
     amount: validated.amount,
     status: "requested",
     createdAtIso: new Date().toISOString(),
-    notes: validated.notes
+    ...(validated.notes !== undefined && { notes: validated.notes })
   };
 
   await writeRailsCatalog({

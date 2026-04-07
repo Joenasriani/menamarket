@@ -3,7 +3,7 @@ import path from "node:path";
 import { getMarketDraftBySlug, markDraftPublished, type MarketDraftRecord } from "./marketDrafts.js";
 import { readMarketCatalog, type MarketCatalog, type MarketCatalogRecord } from "./markets.js";
 
-export type AuditLogEntry = {
+type AuditLogEntry = {
   id: string;
   action: "draft_published";
   targetType: "market_draft";
@@ -12,7 +12,7 @@ export type AuditLogEntry = {
   metadata: Record<string, unknown>;
 };
 
-export type AuditLog = { entries: AuditLogEntry[] };
+type AuditLog = { entries: AuditLogEntry[] };
 
 function assertAuditLog(input: unknown): AuditLog {
   if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("Audit log must be an object.");
@@ -53,15 +53,15 @@ function convertDraftToMarket(draft: MarketDraftRecord): MarketCatalogRecord {
     slug: draft.slug,
     question: draft.question,
     category: draft.category,
-    description: draft.description,
+    ...(draft.description !== undefined && { description: draft.description }),
     resolutionSource: draft.resolutionSource,
     closeTimeIso: draft.closeTimeIso,
-    status: "scheduled",
+    status: "scheduled" as const,
     jurisdiction: draft.jurisdiction,
     visibility: draft.visibility,
     createdAtIso: draft.createdAtIso,
     updatedAtIso: new Date().toISOString(),
-    notes: draft.notes,
+    ...(draft.notes !== undefined && { notes: draft.notes }),
     rules: defaultRulesFromDraft(draft),
     resolutionTitle: "Default resolution basis",
     resolutionBasis: "Resolve strictly according to the named official or primary source and the exact market wording.",
@@ -69,7 +69,7 @@ function convertDraftToMarket(draft: MarketDraftRecord): MarketCatalogRecord {
       "If the named source explicitly confirms the event within scope and time, resolve accordingly.",
       "If the source is ambiguous or outside scope, do not infer beyond the written question."
     ],
-    outcomeType: "binary",
+    outcomeType: "binary" as const,
     outcomes: defaultOutcomesForDraft(),
     priceUpdatedAtIso: new Date().toISOString()
   };

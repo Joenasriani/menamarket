@@ -90,7 +90,7 @@ export async function settleMarketBySlug(marketSlug: string): Promise<{ settleme
   const now = new Date().toISOString();
 
   for (const account of accounts) {
-    const winningHolding = account.holdings.find((holding) => holding.marketSlug === marketSlug && holding.outcomeId === winningOutcomeId);
+    const winningHolding = account.holdings.find((holding: { marketSlug: string; outcomeId: string; quantity: number }) => holding.marketSlug === marketSlug && holding.outcomeId === winningOutcomeId);
     const payoutAmount = winningHolding ? winningHolding.quantity : 0;
     if (payoutAmount <= 0) continue;
 

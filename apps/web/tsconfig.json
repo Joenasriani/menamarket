@@ -8,17 +8,35 @@
     "incremental": true,
     "rootDir": ".",
     "outDir": "dist",
-    "plugins": [{ "name": "next" }]
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": [
     "next-env.d.ts",
     "app/**/*",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
-,
+  "exclude": [
+    "node_modules"
+  ],
   "references": [
-    { "path": "../../packages/ui" },
-    { "path": "../../packages/api" }
+    {
+      "path": "../../packages/ui"
+    },
+    {
+      "path": "../../packages/api"
+    }
   ]
 }

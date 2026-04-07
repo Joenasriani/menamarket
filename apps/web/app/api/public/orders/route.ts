@@ -5,9 +5,9 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const orders = await listOrders({
-      marketSlug: url.searchParams.get("marketSlug") ?? undefined,
-      actorId: url.searchParams.get("actorId") ?? undefined,
-      status: (url.searchParams.get("status") as "open" | "cancelled" | null) ?? undefined
+      ...(url.searchParams.get("marketSlug") !== null && { marketSlug: url.searchParams.get("marketSlug")! }),
+      ...(url.searchParams.get("actorId") !== null && { actorId: url.searchParams.get("actorId")! }),
+      ...(url.searchParams.get("status") !== null && { status: url.searchParams.get("status")! as "open" | "cancelled" })
     });
     return NextResponse.json({ orders, count: orders.length }, { status: 200 });
   } catch (error) {
