@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/market-drafts.schema.json",
+  "title": "MENAMarket draft catalog",
+  "type": "object",
+  "required": [
+    "drafts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "drafts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "question",
+          "category",
+          "resolutionSource",
+          "closeTimeIso",
+          "jurisdiction",
+          "visibility",
+          "draftStatus",
+          "createdAtIso",
+          "updatedAtIso"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "resolutionSource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "closeTimeIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visibility": {
+            "enum": [
+              "internal",
+              "public"
+            ]
+          },
+          "draftStatus": {
+            "enum": [
+              "draft",
+              "review_ready"
+            ]
+          },
+          "createdAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

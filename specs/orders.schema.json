@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/orders.schema.json",
+  "title": "MENAMarket orders",
+  "type": "object",
+  "required": [
+    "orders"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "orders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "marketSlug",
+          "actorId",
+          "outcomeId",
+          "side",
+          "quantity",
+          "limitPrice",
+          "status",
+          "createdAtIso",
+          "updatedAtIso"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "marketSlug": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcomeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "side": {
+            "enum": [
+              "buy",
+              "sell"
+            ]
+          },
+          "quantity": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "limitPrice": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "status": {
+            "enum": [
+              "open",
+              "cancelled"
+            ]
+          },
+          "createdAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

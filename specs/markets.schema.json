@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/markets.schema.json",
+  "title": "MENAMarket catalog",
+  "type": "object",
+  "required": [
+    "markets"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "markets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "question",
+          "category",
+          "resolutionSource",
+          "closeTimeIso",
+          "status",
+          "jurisdiction",
+          "visibility",
+          "createdAtIso",
+          "updatedAtIso",
+          "rules",
+          "resolutionTitle",
+          "resolutionBasis",
+          "outcomeType",
+          "outcomes"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "resolutionSource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "closeTimeIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "review",
+              "scheduled",
+              "open",
+              "halted",
+              "closed",
+              "awaiting_resolution",
+              "resolved",
+              "cancelled"
+            ]
+          },
+          "jurisdiction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visibility": {
+            "enum": [
+              "internal",
+              "public"
+            ]
+          },
+          "createdAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "resolutionTitle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolutionBasis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolutionExamples": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "outcomeType": {
+            "enum": [
+              "binary",
+              "categorical"
+            ]
+          },
+          "sourceLink": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcomes": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "label",
+                "probability",
+                "price"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "probability": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "price": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          },
+          "priceUpdatedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

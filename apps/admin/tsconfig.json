@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo.admin",
+    "jsx": "preserve",
+    "noEmit": true,
+    "allowJs": true,
+    "incremental": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "plugins": [{ "name": "next" }]
+  },
+  "include": [
+    "next-env.d.ts",
+    "app/**/*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+,
+  "references": [
+    { "path": "../../packages/ui" },
+    { "path": "../../packages/api" }
+  ]
+}

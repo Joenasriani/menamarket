@@ -1,0 +1,13 @@
+{
+  "rails": [
+    {
+      "id": "manual",
+      "label": "Manual review rail",
+      "direction": "both",
+      "status": "active",
+      "notes": "Default local-first rail for funding and payout request capture."
+    }
+  ],
+  "fundingIntents": [],
+  "payoutRequests": []
+}

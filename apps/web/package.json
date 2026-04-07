@@ -1,0 +1,17 @@
+{
+  "name": "@menamarket/web",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build:app": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "@menamarket/ui": "file:../../packages/ui",
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

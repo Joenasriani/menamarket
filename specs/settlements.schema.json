@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/settlements.schema.json",
+  "title": "MENAMarket settlements",
+  "type": "object",
+  "required": [
+    "settlements"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "settlements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "marketSlug",
+          "actorId",
+          "winningOutcomeId",
+          "payoutAmount",
+          "createdAtIso"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "marketSlug": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "winningOutcomeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "payoutAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "createdAtIso": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

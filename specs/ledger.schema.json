@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/ledger.schema.json",
+  "title": "MENAMarket ledger",
+  "type": "object",
+  "required": [
+    "accounts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "accounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "actorId",
+          "cashBalance",
+          "cashReserved",
+          "holdings",
+          "updatedAtIso"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cashBalance": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cashReserved": {
+            "type": "number",
+            "minimum": 0
+          },
+          "holdings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "marketSlug",
+                "outcomeId",
+                "quantity",
+                "reservedQuantity"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "marketSlug": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "outcomeId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quantity": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "reservedQuantity": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "updatedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

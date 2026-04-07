@@ -1,0 +1,29 @@
+{
+  "name": "menamarket",
+  "private": true,
+  "version": "0.20.0",
+  "description": "MENAMarket M20 wallet rails abstraction",
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build:packages && tsc -b",
+    "lint": "node --eval \"const fs=require('node:fs'); const required=['data/rails.json','specs/rails.schema.json','packages/api/src/rails.ts','apps/web/app/api/public/rails/route.ts','apps/web/app/api/public/funding-intents/route.ts','apps/web/app/api/public/payout-requests/route.ts','apps/web/app/funding/page.tsx','tests/rails.test.mjs','.env.example']; const missing=required.filter((file)=>!fs.existsSync(file)); if(missing.length){console.error('Missing required files: ' + missing.join(', ')); process.exit(1);} console.log('Lint passed: M20 wallet-rails files are present.');\"",
+    "typecheck": "tsc -b --pretty false",
+    "pretest": "npm run build",
+    "test": "node --test tests/**/*.test.mjs",
+    "dev:web": "npm --workspace @menamarket/web run dev",
+    "dev:admin": "npm --workspace @menamarket/admin run dev",
+    "build:web": "npm --workspace @menamarket/web run build:app",
+    "build:admin": "npm --workspace @menamarket/admin run build:app",
+    "build:packages": "npm --workspace @menamarket/ui run build && npm --workspace @menamarket/api run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "typescript": "^5.8.3"
+  }
+}

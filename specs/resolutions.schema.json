@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://menamarket.local/specs/resolutions.schema.json",
+  "title": "MENAMarket resolutions",
+  "type": "object",
+  "required": [
+    "resolutions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "resolutions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "marketId",
+          "marketSlug",
+          "outcome",
+          "evidence",
+          "sourceLink",
+          "resolvedAtIso",
+          "createdAtIso"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "marketId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "marketSlug": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceLink": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolvedAtIso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAtIso": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

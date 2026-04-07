@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Position",
+  "type": "object",
+  "required": [
+    "id",
+    "marketId",
+    "outcomeId",
+    "walletAddress",
+    "quantity"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "marketId": {
+      "type": "string"
+    },
+    "outcomeId": {
+      "type": "string"
+    },
+    "walletAddress": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "averageEntryPrice": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "realizedPnl": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "unrealizedPnl": {
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
