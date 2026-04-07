@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createBrowserSupabaseClient } from "./lib/supabase/client";
 
 type SessionResponse = {
   session?: {
@@ -51,6 +52,8 @@ export function NavShell() {
   }, []);
 
   async function signOut() {
+    const supabase = createBrowserSupabaseClient();
+    await supabase.auth.signOut();
     await fetch("/api/public/auth/logout", { method: "POST" });
     window.location.href = "/";
   }

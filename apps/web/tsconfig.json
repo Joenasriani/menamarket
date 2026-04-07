@@ -26,6 +26,7 @@
   "include": [
     "next-env.d.ts",
     "app/**/*",
+    "middleware.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

@@ -1,17 +1,38 @@
 import { NextResponse } from "next/server";
-import { ACTOR_SESSION_COOKIE, createActor, createActorSessionToken } from "@menamarket/api";
+import { createClient } from "@supabase/supabase-js";
+import { ACTOR_SESSION_COOKIE, createActorSessionToken, upsertActorFromSupabase } from "@menamarket/api";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const actor = await createActor(body);
+    const body = await request.json() as { access_token?: unknown; username?: unknown };
+    const { access_token, username } = body;
+
+    if (!access_token || typeof access_token !== "string") {
+      return NextResponse.json({ error: "MISSING_TOKEN", message: "access_token required" }, { status: 400 });
+    }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+    );
+
+    const { data: { user }, error } = await supabase.auth.getUser(access_token);
+    if (error || !user || !user.email) {
+      return NextResponse.json({ error: "INVALID_TOKEN", message: "Invalid or expired token." }, { status: 401 });
+    }
+
+    const actor = await upsertActorFromSupabase({
+      id: user.id,
+      email: user.email,
+      ...(typeof username === "string" && username.trim().length > 0 && { username: username.trim() })
+    });
     const token = createActorSessionToken(actor);
 
     const response = NextResponse.json({
       actor: {
         id: actor.id,
         username: actor.username,
-        displayName: actor.displayName
+        ...(actor.displayName !== undefined && { displayName: actor.displayName })
       }
     }, { status: 201 });
 
