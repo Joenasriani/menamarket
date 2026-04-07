@@ -60,15 +60,15 @@ export default async function HomePage() {
         <div className="card-grid">
           <Card title="Markets" eyebrow="Discovery">
             Search and filter prediction markets by category, jurisdiction, and status. View outcomes, probabilities, and order books.
-            <div style={{marginTop: 16}}><a href="/markets" style={{color: "var(--mm-accent)"}}>Browse all markets →</a></div>
+            <div className="card-action-link"><a href="/markets">Browse all markets →</a></div>
           </Card>
           <Card title="Portfolio" eyebrow="Positions">
             Sign in to view your open positions, pending orders, and account activity in one place.
-            <div style={{marginTop: 16}}><a href="/portfolio" style={{color: "var(--mm-accent)"}}>View portfolio →</a></div>
+            <div className="card-action-link"><a href="/portfolio">View portfolio →</a></div>
           </Card>
           <Card title="Activity feed" eyebrow="Live updates">
             Track real-time market activity including new orders, fills, and market state changes.
-            <div style={{marginTop: 16}}><a href="/activity" style={{color: "var(--mm-accent)"}}>View activity →</a></div>
+            <div className="card-action-link"><a href="/activity">View activity →</a></div>
           </Card>
         </div>
       </section>
@@ -87,7 +87,7 @@ export default async function HomePage() {
           </Card>
           <Card title="Compliance-first" eyebrow="Governance">
             Jurisdiction tracking, resolution sources, and market rules are required fields — not optional metadata.
-            <div style={{marginTop: 16}}><a href="/compliance" style={{color: "var(--mm-accent)"}}>Review constraints →</a></div>
+            <div className="card-action-link"><a href="/compliance">Review constraints →</a></div>
           </Card>
         </div>
       </section>

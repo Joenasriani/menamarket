@@ -31,7 +31,7 @@ export default function CompliancePage() {
         </div>
       </section>
 
-      <section style={{paddingTop: 24}}>
+      <section className="section-gap">
         <h2 style={{margin: "0 0 16px"}}>Financial controls</h2>
         <div className="card-grid">
           {financialConstraints.map((item) => (
@@ -43,7 +43,7 @@ export default function CompliancePage() {
         </div>
       </section>
 
-      <section style={{paddingTop: 24}}>
+      <section className="section-gap">
         <h2 style={{margin: "0 0 16px"}}>Supported jurisdictions</h2>
         <div className="card-grid">
           <Card title="Saudi Arabia (SAU)" eyebrow="Active">Markets subject to Saudi CMA oversight and Tadawul reporting standards.</Card>

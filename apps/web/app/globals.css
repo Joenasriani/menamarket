@@ -73,6 +73,15 @@ button, input, select, textarea { font: inherit; }
   color: var(--mm-accent) !important;
   font-weight: 600;
 }
+.card-action-link {
+  margin-top: 16px;
+}
+.card-action-link a {
+  color: var(--mm-accent);
+}
+.section-gap {
+  padding-top: 24px;
+}
 .nav-link--signup {
   background: linear-gradient(135deg, var(--mm-accent), var(--mm-accent-2));
   color: #08131f !important;

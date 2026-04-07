@@ -17,7 +17,7 @@ export default function AboutPage() {
         </Card>
       </div>
 
-      <section style={{paddingTop: 24}}>
+      <section className="section-gap">
         <h2 style={{margin: "0 0 16px"}}>How it works</h2>
         <div className="card-grid">
           <Card title="1. Browse markets" eyebrow="Discover">
@@ -32,7 +32,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section style={{paddingTop: 24}}>
+      <section className="section-gap">
         <h2 style={{margin: "0 0 16px"}}>Platform principles</h2>
         <div className="card-grid">
           <Card title="Every market has rules" eyebrow="Market integrity">
