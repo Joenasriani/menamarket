@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { ACTOR_SESSION_COOKIE, getActorPositions, listOrders, verifyActorSessionToken } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 export default async function PortfolioPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get(ACTOR_SESSION_COOKIE)?.value;

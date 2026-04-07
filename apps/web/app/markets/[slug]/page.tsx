@@ -3,6 +3,8 @@ import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui"
 import { AiMarketSummary } from "./ai-market-summary";
 import { getOrderBook, getPublicMarketBySlug, getPublicMarketPricing, getResolutionByMarketSlug } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = { params: Promise<{ slug: string }> };
 
 export default async function MarketDetailPage({ params }: PageProps) {
