@@ -20,11 +20,21 @@ export function getAdminLoginUsername(): string {
 }
 
 export function getAdminLoginPassword(): string {
-  return requiredEnv("ADMIN_LOGIN_PASSWORD");
+  const password = requiredEnv("ADMIN_LOGIN_PASSWORD");
+  const WEAK_DEFAULTS = new Set(["change-me", "changeme", "password", "admin", "12345678", "secret"]);
+  if (process.env.NODE_ENV === "production" && WEAK_DEFAULTS.has(password.toLowerCase())) {
+    throw new Error("ADMIN_LOGIN_PASSWORD must not use a default or weak value in production.");
+  }
+  return password;
 }
 
 export function getAdminSessionSecret(): string {
-  return requiredEnv("ADMIN_SESSION_SECRET");
+  const secret = requiredEnv("ADMIN_SESSION_SECRET");
+  const PLACEHOLDER = "replace-with-a-";
+  if (process.env.NODE_ENV === "production" && secret.startsWith(PLACEHOLDER)) {
+    throw new Error("ADMIN_SESSION_SECRET must not use a placeholder value in production.");
+  }
+  return secret;
 }
 
 export function getAdminSessionMaxAgeSeconds(): number {

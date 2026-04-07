@@ -18,7 +18,12 @@ function requiredEnv(name: string): string {
 }
 
 export function getActorSessionSecret(): string {
-  return requiredEnv("ACTOR_SESSION_SECRET");
+  const secret = requiredEnv("ACTOR_SESSION_SECRET");
+  const PLACEHOLDER = "replace-with-a-";
+  if (process.env.NODE_ENV === "production" && secret.startsWith(PLACEHOLDER)) {
+    throw new Error("ACTOR_SESSION_SECRET must not use a placeholder value in production.");
+  }
+  return secret;
 }
 
 export function getActorSessionMaxAgeSeconds(): number {

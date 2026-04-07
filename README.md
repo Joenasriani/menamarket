@@ -81,12 +81,14 @@ See `.env.example` for the full list and descriptions.
 | `DEFAULT_FUNDING_RAIL` | Yes | e.g. `manual` |
 | `DEFAULT_PAYOUT_RAIL` | Yes | e.g. `manual` |
 | `OPENROUTER_API_KEY` | No | Only required if AI features are enabled |
+| `OPENROUTER_MODEL` | No | Default: `openrouter/auto`; override to use a specific model |
+| `MENAMARKET_API` | No | API base URL; defaults to `/api` when unset. Set to `https://<your-app>.vercel.app/api` if needed |
 
 > **Security note**: The app will refuse to start in production if `ACTOR_SESSION_SECRET` or `ADMIN_SESSION_SECRET` are missing or empty. Never deploy with the default `change-me` password or placeholder secrets.
 
 ### Notes on workspace tooling
 
-This repo uses **npm workspaces** (root `package.json`). A `pnpm-workspace.yaml` file also exists for local pnpm compatibility, but Vercel is configured to use npm via `"packageManager": "npm@10.9.2"` in `package.json` and the committed `package-lock.json`.
+This repo uses **npm workspaces** (root `package.json`). Vercel is configured to use npm via `"packageManager": "npm@10.9.2"` in `package.json` and the committed `package-lock.json`. There is no `pnpm-workspace.yaml` in this repo; npm is the sole package manager.
 
 ## Status
 This is a real shell implementation only. Core trading, funding, oracle resolution, and compliance workflows are intentionally deferred to later scoped modules.
