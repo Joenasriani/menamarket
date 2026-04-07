@@ -43,9 +43,16 @@ Admin app: `http://localhost:3001`
 
 ## Deploy to Vercel
 
-This monorepo deploys `apps/web` to Vercel using npm workspaces.
+This monorepo contains **two separate Next.js apps** that must be deployed as **two separate Vercel projects**:
 
-### Vercel project settings
+| App | Purpose | Users |
+|---|---|---|
+| `apps/web` | Public-facing website (Markets, Activity, Portfolio, etc.) | Everyone — **no login required** to browse |
+| `apps/admin` | Internal admin panel (Market Ops, Audit, Drafts, etc.) | Admins only — **login required** |
+
+> **⚠️ Important**: If you only see an admin login page with "Protected internal access" after deploying, you deployed the **admin** app instead of the **web** app. Follow [Option A](#option-a-deploy-from-the-repository-root-web-app) or [Option B](#option-b-deploy-each-app-with-its-own-root-directory) below to deploy the correct app.
+
+### Option A: Deploy from the repository root (web app)
 
 | Setting | Value |
 |---|---|
@@ -61,6 +68,26 @@ The `build:vercel` script runs in order:
 3. Typecheck (TypeScript project references)
 4. Tests (Node.js built-in test runner)
 5. Next.js production build for `apps/web`
+
+### Option B: Deploy each app with its own Root Directory
+
+Create **two** Vercel projects from the same repo:
+
+**Public web app** (what end users see):
+
+| Setting | Value |
+|---|---|
+| Root Directory | `apps/web` |
+| Framework Preset | Next.js |
+
+**Admin panel** (internal, login-protected):
+
+| Setting | Value |
+|---|---|
+| Root Directory | `apps/admin` |
+| Framework Preset | Next.js |
+
+Each app has its own `vercel.json` that handles install and build commands automatically.
 
 ### Required environment variables
 
