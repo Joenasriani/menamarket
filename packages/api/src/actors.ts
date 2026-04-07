@@ -177,3 +177,55 @@ export async function authenticateActor(input: unknown): Promise<ActorRecord> {
 
   return actor;
 }
+
+export async function getActorById(id: string): Promise<ActorRecord | null> {
+  const catalog = await readActorCatalog();
+  return catalog.actors.find((actor) => actor.id === id) ?? null;
+}
+
+export type SupabaseUserInput = {
+  id: string;
+  email: string;
+  username?: string;
+};
+
+function deriveUsernameFromEmail(email: string): string {
+  const prefix = email.split("@")[0] ?? "user";
+  const sanitized = prefix.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 30);
+  return sanitized.length >= 3 ? sanitized : `user_${sanitized}`.slice(0, 30);
+}
+
+/**
+ * Finds an existing actor by Supabase user ID or creates a new one.
+ * Used after Supabase authentication to bridge Supabase identity with
+ * the local actor record required by the order/position system.
+ */
+export async function upsertActorFromSupabase(input: SupabaseUserInput): Promise<ActorRecord> {
+  const existing = await getActorById(input.id);
+  if (existing) return existing;
+
+  const catalog = await readActorCatalog();
+
+  const base = input.username
+    ? input.username.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 30)
+    : deriveUsernameFromEmail(input.email);
+
+  let username = base;
+  let suffix = 1;
+  while (catalog.actors.some((a) => a.username === username)) {
+    username = `${base}${suffix}`;
+    suffix++;
+  }
+
+  const now = new Date().toISOString();
+  const actor: ActorRecord = {
+    id: input.id,
+    username,
+    passwordHash: "supabase:no-local-password",
+    createdAtIso: now,
+    updatedAtIso: now
+  };
+
+  await writeActorCatalog({ actors: [...catalog.actors, actor] });
+  return actor;
+}
