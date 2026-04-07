@@ -1,11 +1,23 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { AiMarketSummary } from "./ai-market-summary";
+import { PlaceOrderForm } from "./place-order-form";
 import { getOrderBook, getPublicMarketBySlug, getPublicMarketPricing, getResolutionByMarketSlug } from "@menamarket/api";
 
 export const dynamic = "force-dynamic";
 
 type PageProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const market = await getPublicMarketBySlug(slug);
+  if (!market) return { title: "Market not found — MENAMarket" };
+  return {
+    title: `${market.question} — MENAMarket`,
+    description: market.description ?? `Prediction market: ${market.question}`
+  };
+}
 
 export default async function MarketDetailPage({ params }: PageProps) {
   const { slug } = await params;
@@ -84,6 +96,8 @@ export default async function MarketDetailPage({ params }: PageProps) {
           ) : "No open sell orders."}
         </Card>
       </div>
+
+      <PlaceOrderForm marketSlug={slug} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} />
 
       <AiMarketSummary slug={slug} question={market.question} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} {...(market.description !== undefined && { description: market.description })} />
 
