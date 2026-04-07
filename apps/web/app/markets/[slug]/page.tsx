@@ -41,6 +41,19 @@ export default async function MarketDetailPage({ params }: PageProps) {
         ]}
       />
 
+      {market.rules && market.rules.length > 0 ? (
+        <Card title="Market rules" eyebrow="Resolution criteria">
+          <div className="stack" style={{ gap: 8 }}>
+            {market.rules.map((rule, index) => (
+              <div key={index} style={{ display: "flex", gap: 8 }}>
+                <span style={{ color: "#94a9c0", flexShrink: 0 }}>{index + 1}.</span>
+                <span>{rule}</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+      ) : null}
+
       <div className="card-grid">
         <Card title="Outcomes and prices" eyebrow="Read-only snapshot">
           <div className="stack" style={{ gap: 12 }}>

@@ -1,8 +1,7 @@
 import { Badge, Button, Card, PageHeader, TableShell } from "@menamarket/ui";
+import { listPublicMarkets } from "@menamarket/api";
 
 export const dynamic = "force-dynamic";
-
-import { listPublicMarkets } from "@menamarket/api";
 
 const featureRows = [
   { area: "Market Discovery", current: "Live catalog with search, filters, and faceted browsing", status: "Active" },
