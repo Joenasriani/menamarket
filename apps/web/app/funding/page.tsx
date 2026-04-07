@@ -53,7 +53,7 @@ export default function FundingPage() {
   function validateInputs(): string | null {
     if (!actorId.trim()) return "Actor ID is required.";
     const numAmount = Number(amount);
-    if (!Number.isFinite(numAmount) || numAmount <= 0) return "Amount must be a positive number.";
+    if (!Number.isFinite(numAmount) || numAmount < 0.01) return "Amount must be at least 0.01.";
     return null;
   }
 
@@ -139,7 +139,7 @@ export default function FundingPage() {
           </label>
           <label className="stack">
             <span>Amount</span>
-            <input style={fieldStyle} type="number" min="0" step="any" value={amount} onChange={(event) => setAmount(event.target.value)} required />
+            <input style={fieldStyle} type="number" min="0.01" step="any" value={amount} onChange={(event) => setAmount(event.target.value)} required />
           </label>
           <div className="inline">
             <Button type="button" onClick={createFundingIntent}>Create funding intent</Button>

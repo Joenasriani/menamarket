@@ -96,9 +96,12 @@ function verifyPassword(password: string, stored: string): boolean {
     if (derivedBuf.length !== hashBuf.length) return false;
     return crypto.timingSafeEqual(derivedBuf, hashBuf);
   }
-  // Legacy SHA-256 fallback for any pre-existing actors
+  // Legacy SHA-256 fallback for any pre-existing actors (deprecated; will be removed once all accounts migrate)
   const legacy = crypto.createHash("sha256").update(password).digest("hex");
-  return legacy === stored;
+  const legacyBuf = Buffer.from(legacy, "hex");
+  const storedBuf = Buffer.from(stored, "hex");
+  if (legacyBuf.length !== storedBuf.length) return false;
+  return crypto.timingSafeEqual(legacyBuf, storedBuf);
 }
 
 export function validateSignupInput(input: unknown): SignupInput {
