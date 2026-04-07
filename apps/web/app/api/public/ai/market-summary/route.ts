@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "OPENROUTER_API_KEY is not configured." }, { status: 500 });
     }
 
-    const model = process.env.OPENROUTER_MODEL ?? "openrouter/auto:free";
+    const model = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
     const prompt = [
       "Write a concise trading-neutral market summary from structured market data only.",
       "Do not invent facts or external context.",
