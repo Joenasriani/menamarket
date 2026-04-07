@@ -82,7 +82,7 @@ See `.env.example` for the full list and descriptions.
 | `DEFAULT_PAYOUT_RAIL` | Yes | e.g. `manual` |
 | `OPENROUTER_API_KEY` | No | Only required if AI features are enabled |
 | `OPENROUTER_MODEL` | No | Default: `openrouter/auto`; override to use a specific model |
-| `MENAMARKET_API` | No | API base URL; defaults to `/api` when unset. Set to `https://<your-app>.vercel.app/api` if needed |
+| `MENAMARKET_API` | No | API base URL for server-side calls. Leave blank on Vercel — the app uses the relative path `/api` (same origin) by default. Only set this if calling from a different origin. |
 
 > **Security note**: The app will refuse to start in production if `ACTOR_SESSION_SECRET` or `ADMIN_SESSION_SECRET` are missing or empty. Never deploy with the default `change-me` password or placeholder secrets.
 

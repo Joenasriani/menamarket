@@ -21,18 +21,27 @@ export function getAdminLoginUsername(): string {
 
 export function getAdminLoginPassword(): string {
   const password = requiredEnv("ADMIN_LOGIN_PASSWORD");
-  const WEAK_DEFAULTS = new Set(["change-me", "changeme", "password", "admin", "12345678", "secret"]);
-  if (process.env.NODE_ENV === "production" && WEAK_DEFAULTS.has(password.toLowerCase())) {
-    throw new Error("ADMIN_LOGIN_PASSWORD must not use a default or weak value in production.");
+  if (process.env.NODE_ENV === "production") {
+    const WEAK_DEFAULTS = new Set(["change-me", "changeme", "password", "admin", "12345678", "secret"]);
+    if (WEAK_DEFAULTS.has(password.toLowerCase())) {
+      throw new Error("ADMIN_LOGIN_PASSWORD must not use a default or well-known weak value in production.");
+    }
+    if (password.length < 12) {
+      throw new Error("ADMIN_LOGIN_PASSWORD must be at least 12 characters in production.");
+    }
   }
   return password;
 }
 
 export function getAdminSessionSecret(): string {
   const secret = requiredEnv("ADMIN_SESSION_SECRET");
-  const PLACEHOLDER = "replace-with-a-";
-  if (process.env.NODE_ENV === "production" && secret.startsWith(PLACEHOLDER)) {
-    throw new Error("ADMIN_SESSION_SECRET must not use a placeholder value in production.");
+  if (process.env.NODE_ENV === "production") {
+    if (secret.startsWith("replace-with-a-")) {
+      throw new Error("ADMIN_SESSION_SECRET must not use a placeholder value in production.");
+    }
+    if (secret.length < 32) {
+      throw new Error("ADMIN_SESSION_SECRET must be at least 32 characters in production.");
+    }
   }
   return secret;
 }

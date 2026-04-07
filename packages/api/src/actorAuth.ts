@@ -19,9 +19,13 @@ function requiredEnv(name: string): string {
 
 export function getActorSessionSecret(): string {
   const secret = requiredEnv("ACTOR_SESSION_SECRET");
-  const PLACEHOLDER = "replace-with-a-";
-  if (process.env.NODE_ENV === "production" && secret.startsWith(PLACEHOLDER)) {
-    throw new Error("ACTOR_SESSION_SECRET must not use a placeholder value in production.");
+  if (process.env.NODE_ENV === "production") {
+    if (secret.startsWith("replace-with-a-")) {
+      throw new Error("ACTOR_SESSION_SECRET must not use a placeholder value in production.");
+    }
+    if (secret.length < 32) {
+      throw new Error("ACTOR_SESSION_SECRET must be at least 32 characters in production.");
+    }
   }
   return secret;
 }
