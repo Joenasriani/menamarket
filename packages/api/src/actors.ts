@@ -91,8 +91,8 @@ function verifyPassword(password: string, stored: string): boolean {
     const salt = parts[1]!;
     const hash = parts[2]!;
     const derived = crypto.scryptSync(password, salt, 64).toString("hex");
-    const derivedBuf = Buffer.from(derived, "utf-8");
-    const hashBuf = Buffer.from(hash, "utf-8");
+    const derivedBuf = Buffer.from(derived, "hex");
+    const hashBuf = Buffer.from(hash, "hex");
     if (derivedBuf.length !== hashBuf.length) return false;
     return crypto.timingSafeEqual(derivedBuf, hashBuf);
   }

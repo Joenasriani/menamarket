@@ -139,7 +139,7 @@ export default function FundingPage() {
           </label>
           <label className="stack">
             <span>Amount</span>
-            <input style={fieldStyle} type="number" min="0.01" step="any" value={amount} onChange={(event) => setAmount(event.target.value)} required />
+            <input style={fieldStyle} type="number" min="0" step="any" value={amount} onChange={(event) => setAmount(event.target.value)} required />
           </label>
           <div className="inline">
             <Button type="button" onClick={createFundingIntent}>Create funding intent</Button>
