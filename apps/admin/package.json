@@ -11,6 +11,7 @@
     "start": "next start -p 3001"
   },
   "dependencies": {
+    "@menamarket/api": "file:../../packages/api",
     "@menamarket/ui": "file:../../packages/ui",
     "next": "^15.3.0",
     "react": "^19.1.0",

@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { getAnyMarketBySlug } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };

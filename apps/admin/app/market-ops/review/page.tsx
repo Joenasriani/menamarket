@@ -2,6 +2,8 @@ import { EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { listReviewReadyDrafts } from "@menamarket/api";
 import PublishDraftButton from "./publish-draft-button";
 
+export const dynamic = "force-dynamic";
+
 export default async function ReviewPage() {
   const drafts = await listReviewReadyDrafts();
 

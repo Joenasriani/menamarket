@@ -1,6 +1,8 @@
 import { EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { listMarketDrafts } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 export default async function DraftsPage() {
   const drafts = await listMarketDrafts();
 
