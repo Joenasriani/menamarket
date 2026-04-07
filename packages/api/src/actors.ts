@@ -205,6 +205,7 @@ export async function upsertActorFromSupabase(input: SupabaseUserInput): Promise
   if (existing) return existing;
 
   const catalog = await readActorCatalog();
+  const existingUsernames = new Set(catalog.actors.map((a) => a.username));
 
   const base = input.username
     ? input.username.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 30)
@@ -212,7 +213,7 @@ export async function upsertActorFromSupabase(input: SupabaseUserInput): Promise
 
   let username = base;
   let suffix = 1;
-  while (catalog.actors.some((a) => a.username === username)) {
+  while (existingUsernames.has(username)) {
     username = `${base}${suffix}`;
     suffix++;
   }
