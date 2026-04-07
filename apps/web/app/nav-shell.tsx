@@ -13,8 +13,6 @@ type SessionResponse = {
 const guestNavItems = [
   ["Markets", "/markets"],
   ["Activity", "/activity"],
-  ["Funding", "/funding"],
-  ["Portfolio", "/portfolio"],
   ["Compliance", "/compliance"],
   ["About", "/about"]
 ] as const;

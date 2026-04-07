@@ -66,7 +66,9 @@ export function verifyActorSessionToken(token: string | undefined | null): Actor
   if (!raw || !signature) return null;
 
   const expected = sign(raw);
-  if (signature !== expected) return null;
+  const sigBuffer = Buffer.from(signature, "utf-8");
+  const expBuffer = Buffer.from(expected, "utf-8");
+  if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) return null;
 
   try {
     const parsed = JSON.parse(Buffer.from(raw, "base64url").toString("utf-8")) as ActorSessionPayload;
