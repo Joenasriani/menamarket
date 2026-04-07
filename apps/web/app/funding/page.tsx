@@ -27,6 +27,21 @@ export default function FundingPage() {
   const [amount, setAmount] = useState("100");
   const [fundingResult, setFundingResult] = useState("");
   const [payoutResult, setPayoutResult] = useState("");
+  const [sessionLoaded, setSessionLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/public/auth/session")
+      .then((res) => res.json())
+      .then((data: { session?: { actorId: string } | null }) => {
+        if (!cancelled && data.session?.actorId) {
+          setActorId(data.session.actorId);
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => { if (!cancelled) setSessionLoaded(true); });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -134,7 +149,7 @@ export default function FundingPage() {
       <Card title="Create funding or payout request" eyebrow="Rail request">
         <div className="stack" style={{ gap: 14 }}>
           <label className="stack">
-            <span>Actor ID</span>
+            <span>Actor ID {sessionLoaded && !actorId ? <span style={{ color: "#ffb2b2", fontSize: 13 }}>(sign in to auto-fill)</span> : null}</span>
             <input style={fieldStyle} value={actorId} onChange={(event) => setActorId(event.target.value)} placeholder="actor_..." required />
           </label>
           <label className="stack">

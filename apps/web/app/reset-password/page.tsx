@@ -20,15 +20,25 @@ export default function ResetPasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [ready, setReady] = useState(false);
   const [done, setDone] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
     const supabase = createBrowserSupabaseClient();
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") {
         setReady(true);
+        setTimedOut(false);
       }
     });
-    return () => subscription.unsubscribe();
+
+    const timeout = setTimeout(() => {
+      setTimedOut(true);
+    }, 10000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -67,10 +77,19 @@ export default function ResetPasswordPage() {
           </div>
         ) : !ready ? (
           <div className="stack">
-            <div style={{ color: "#94a9c0" }}>Verifying your reset link…</div>
-            <div style={{ color: "#ffb2b2", fontSize: 14 }}>
-              If this page is loading slowly, make sure you clicked the link from your email and try again. <a href="/forgot-password">Request a new link →</a>
-            </div>
+            {timedOut ? (
+              <div style={{ color: "#ffb2b2", lineHeight: 1.6 }}>
+                Your reset link could not be verified. This can happen if the link has expired, was already used, or was not opened in the same browser.{" "}
+                <a href="/forgot-password">Request a new reset link →</a>
+              </div>
+            ) : (
+              <>
+                <div style={{ color: "#94a9c0" }}>Verifying your reset link…</div>
+                <div style={{ color: "#94a9c0", fontSize: 14 }}>
+                  Make sure you clicked the link directly from your email.
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <form onSubmit={onSubmit} className="stack">

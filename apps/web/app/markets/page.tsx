@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { Badge, Card, EmptyState, PageHeader } from "@menamarket/ui";
 import { filterPublicMarkets, isDiscoveryStatus, listDiscoverySummary } from "@menamarket/api";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Markets — MENAMarket",
+  description: "Browse and filter MENA-focused prediction markets."
+};
 
 type SearchParams = Promise<{
   q?: string;
@@ -138,24 +144,26 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
       ) : (
         <div className="card-grid">
           {markets.map((market) => (
-            <Card key={market.slug} title={market.question} eyebrow={market.category}>
-              <div className="stack" style={{ gap: 12 }}>
-                <div className="inline">
-                  <Badge tone="accent">{market.status}</Badge>
-                  <Badge>{market.jurisdiction}</Badge>
-                  <Badge>{market.visibility}</Badge>
+            <a key={market.slug} href={`/markets/${market.slug}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+              <Card title={market.question} eyebrow={market.category}>
+                <div className="stack" style={{ gap: 12 }}>
+                  <div className="inline">
+                    <Badge tone="accent">{market.status}</Badge>
+                    <Badge>{market.jurisdiction}</Badge>
+                    <Badge>{market.visibility}</Badge>
+                  </div>
+                  <div>Resolution source: {market.resolutionSource}</div>
+                  <div>
+                    Close time:{" "}
+                    {new Date(market.closeTimeIso).toLocaleString("en-US", {
+                      dateStyle: "medium",
+                      timeStyle: "short"
+                    })}
+                  </div>
+                  <div style={{ color: "#8ce6d6" }}>Open market detail →</div>
                 </div>
-                <div>Resolution source: {market.resolutionSource}</div>
-                <div>
-                  Close time:{" "}
-                  {new Date(market.closeTimeIso).toLocaleString("en-US", {
-                    dateStyle: "medium",
-                    timeStyle: "short"
-                  })}
-                </div>
-                <a href={`/markets/${market.slug}`}>Open market detail →</a>
-              </div>
-            </Card>
+              </Card>
+            </a>
           ))}
         </div>
       )}

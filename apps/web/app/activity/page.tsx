@@ -17,6 +17,7 @@ export default function ActivityPage() {
   const [items, setItems] = useState<ActivityItem[]>([]);
   const [error, setError] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -35,6 +36,8 @@ export default function ActivityPage() {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : "Failed to load activity feed.");
         }
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     }
 
@@ -61,7 +64,23 @@ export default function ActivityPage() {
         <Card title="Feed error" eyebrow="Client state">{error}</Card>
       ) : null}
       <div className="stack" style={{ gap: 16 }}>
-        {items.length === 0 ? (
+        {loading ? (
+          <div className="stack" style={{ gap: 16 }}>
+            {[1, 2, 3].map((n) => (
+              <div
+                key={n}
+                style={{
+                  background: "rgba(10, 23, 36, 0.82)",
+                  border: "1px solid rgba(125, 161, 196, 0.18)",
+                  borderRadius: 22,
+                  padding: 22,
+                  height: 88,
+                  opacity: 0.5
+                }}
+              />
+            ))}
+          </div>
+        ) : items.length === 0 ? (
           <Card title="No recent activity" eyebrow="Truthful state">
             No orders, fills, settlements, or audit events are currently available in the activity feed.
           </Card>

@@ -1,8 +1,14 @@
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
 import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui";
-import { ACTOR_SESSION_COOKIE, getActorPositions, listOrders, verifyActorSessionToken } from "@menamarket/api";
+import { ACTOR_SESSION_COOKIE, getActorPositions, getLedgerAccount, listOrders, verifyActorSessionToken } from "@menamarket/api";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Portfolio — MENAMarket",
+  description: "View your open positions, order exposure, and account balance."
+};
 
 export default async function PortfolioPage() {
   const cookieStore = await cookies();
@@ -18,9 +24,10 @@ export default async function PortfolioPage() {
     );
   }
 
-  const [positions, openOrders] = await Promise.all([
+  const [positions, openOrders, ledgerAccount] = await Promise.all([
     getActorPositions(session.actorId),
-    listOrders({ actorId: session.actorId, status: "open" })
+    listOrders({ actorId: session.actorId, status: "open" }),
+    getLedgerAccount(session.actorId)
   ]);
 
   return (
@@ -32,6 +39,39 @@ export default async function PortfolioPage() {
         <Badge>{positions.length} position groups</Badge>
         <Badge>{openOrders.length} open orders</Badge>
       </div>
+
+      {ledgerAccount ? (
+        <div className="card-grid">
+          <Card title="Cash balance" eyebrow="Ledger">
+            <div className="stack" style={{ gap: 8 }}>
+              <div style={{ fontSize: "1.5rem", fontWeight: 600, color: "#edf3fb" }}>
+                {ledgerAccount.cashBalance.toFixed(2)}
+              </div>
+              <div>Reserved: {ledgerAccount.cashReserved.toFixed(2)}</div>
+              <div>Available: {(ledgerAccount.cashBalance - ledgerAccount.cashReserved).toFixed(2)}</div>
+            </div>
+          </Card>
+          <Card title="Holdings" eyebrow="Ledger">
+            {ledgerAccount.holdings.length ? (
+              <div className="stack" style={{ gap: 8 }}>
+                {ledgerAccount.holdings.map((holding, index) => (
+                  <div key={index}>
+                    {holding.marketSlug} · {holding.outcomeId} · qty {holding.quantity}
+                    {holding.reservedQuantity > 0 ? ` (${holding.reservedQuantity} reserved)` : ""}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>No holdings on record.</div>
+            )}
+          </Card>
+          <Card title="Account updated" eyebrow="Ledger">
+            {new Date(ledgerAccount.updatedAtIso).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}
+          </Card>
+        </div>
+      ) : (
+        <EmptyState title="No ledger account" description="No ledger account is linked to this actor. Fund your account to create a ledger record." action={<a href="/funding">Go to funding →</a>} />
+      )}
 
       {positions.length ? (
         <TableShell
