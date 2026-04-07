@@ -1,6 +1,8 @@
 import { EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { listAllMarkets } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCatalogPage() {
   const markets = await listAllMarkets();
 

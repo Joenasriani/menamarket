@@ -2,6 +2,8 @@ import { EmptyState, PageHeader } from "@menamarket/ui";
 import { allowedLifecycleActions, getResolutionByMarketSlug, listAllMarkets } from "@menamarket/api";
 import LifecycleActionPanel from "./lifecycle-action-panel";
 
+export const dynamic = "force-dynamic";
+
 export default async function LifecyclePage() {
   const markets = await listAllMarkets();
 

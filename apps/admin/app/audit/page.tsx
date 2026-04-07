@@ -1,6 +1,8 @@
 import { Badge, Card, EmptyState, PageHeader } from "@menamarket/ui";
 import { auditFacetSummary, listAuditEntries } from "@menamarket/api";
 
+export const dynamic = "force-dynamic";
+
 type SearchParams = Promise<{
   q?: string;
   action?: string;
