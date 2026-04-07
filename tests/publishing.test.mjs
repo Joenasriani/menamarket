@@ -38,7 +38,15 @@ test("market catalog accepts a scheduled record shaped like a published draft co
         jurisdiction: "UAE",
         visibility: "public",
         createdAtIso: "2026-04-07T00:00:00.000Z",
-        updatedAtIso: "2026-04-07T00:00:00.000Z"
+        updatedAtIso: "2026-04-07T00:00:00.000Z",
+        rules: ["Resolve strictly according to the named official or primary source."],
+        resolutionTitle: "Default resolution basis",
+        resolutionBasis: "Resolve strictly according to the named official or primary source and the exact market wording.",
+        outcomeType: "binary",
+        outcomes: [
+          { id: "yes", label: "Yes", probability: 0.5, price: 0.5 },
+          { id: "no", label: "No", probability: 0.5, price: 0.5 }
+        ]
       }
     ]
   });

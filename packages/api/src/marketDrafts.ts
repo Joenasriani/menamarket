@@ -84,7 +84,7 @@ function parseDraftRecord(input: unknown, index: number): MarketDraftRecord {
     slug: record.slug,
     question: record.question,
     category: record.category,
-    description: record.description as string | undefined,
+    ...(record.description !== undefined && { description: record.description as string }),
     resolutionSource: record.resolutionSource,
     closeTimeIso: record.closeTimeIso,
     jurisdiction: record.jurisdiction,
@@ -92,7 +92,7 @@ function parseDraftRecord(input: unknown, index: number): MarketDraftRecord {
     draftStatus: record.draftStatus as DraftStatus,
     createdAtIso: record.createdAtIso,
     updatedAtIso: record.updatedAtIso,
-    notes: record.notes as string | undefined
+    ...(record.notes !== undefined && { notes: record.notes as string })
   };
 }
 
@@ -130,13 +130,13 @@ export function validateNewMarketDraftInput(input: unknown): NewMarketDraftInput
     question: value.question,
     slug: value.slug,
     category: value.category,
-    description: value.description as string | undefined,
+    ...(value.description !== undefined && { description: value.description as string }),
     resolutionSource: value.resolutionSource,
     closeTimeIso: value.closeTimeIso,
     jurisdiction: value.jurisdiction,
     visibility: value.visibility,
     draftStatus: value.draftStatus,
-    notes: value.notes as string | undefined
+    ...(value.notes !== undefined && { notes: value.notes as string })
   };
 }
 
@@ -177,7 +177,7 @@ export async function createMarketDraft(input: unknown): Promise<MarketDraftReco
     slug: validated.slug,
     question: validated.question,
     category: validated.category,
-    description: validated.description,
+    ...(validated.description !== undefined && { description: validated.description }),
     resolutionSource: validated.resolutionSource,
     closeTimeIso: validated.closeTimeIso,
     jurisdiction: validated.jurisdiction,
@@ -185,7 +185,7 @@ export async function createMarketDraft(input: unknown): Promise<MarketDraftReco
     draftStatus: validated.draftStatus,
     createdAtIso: now,
     updatedAtIso: now,
-    notes: validated.notes
+    ...(validated.notes !== undefined && { notes: validated.notes })
   };
   const nextCatalog: MarketDraftCatalog = { drafts: [...catalog.drafts, newRecord] };
   const filePath = path.resolve(process.cwd(), "data/market-drafts.json");
@@ -199,15 +199,11 @@ export async function markDraftPublished(slug: string): Promise<MarketDraftRecor
   if (draftIndex === -1) {
     throw new Error("Draft not found.");
   }
-  const draft = catalog.drafts[draftIndex];
+  const draft = catalog.drafts[draftIndex]!;
   if (draft.draftStatus !== "review_ready") {
     throw new Error("Only review_ready drafts can be published.");
   }
-  const updated: MarketDraftRecord = {
-    ...draft,
-    draftStatus: "published",
-    updatedAtIso: new Date().toISOString()
-  };
+  const updated = { ...draft, draftStatus: "published" as const, updatedAtIso: new Date().toISOString() } as MarketDraftRecord;
   const nextCatalog: MarketDraftCatalog = {
     drafts: catalog.drafts.map((item, index) => index === draftIndex ? updated : item)
   };

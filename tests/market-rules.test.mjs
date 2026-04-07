@@ -20,7 +20,11 @@ test("market catalog requires rules and resolution fields", () => {
         rules: ["Use the named source only."],
         resolutionTitle: "Source-led resolution",
         resolutionBasis: "Resolve only according to the named source.",
-        outcomeType: "binary"
+        outcomeType: "binary",
+        outcomes: [
+          { id: "yes", label: "Yes", probability: 0.5, price: 0.5 },
+          { id: "no", label: "No", probability: 0.5, price: 0.5 }
+        ]
       }
     ]
   });

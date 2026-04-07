@@ -11,7 +11,7 @@ export default async function AdminMarketDetailPage({ params }: PageProps) {
   const market = await getAnyMarketBySlug(slug);
 
   if (!market) {
-    notFound();
+    return notFound();
   }
 
   return (

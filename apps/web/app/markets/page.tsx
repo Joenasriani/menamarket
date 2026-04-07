@@ -44,10 +44,10 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
   const [summary, markets] = await Promise.all([
     listDiscoverySummary(),
     filterPublicMarkets({
-      q: params.q,
-      category: params.category,
-      jurisdiction: params.jurisdiction,
-      status
+      ...(params.q !== undefined && { q: params.q }),
+      ...(params.category !== undefined && { category: params.category }),
+      ...(params.jurisdiction !== undefined && { jurisdiction: params.jurisdiction }),
+      ...(status !== undefined && { status })
     })
   ]);
 

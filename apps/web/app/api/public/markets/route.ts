@@ -5,10 +5,10 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const result = await listPublicMarketsApi({
-      q: url.searchParams.get("q") ?? undefined,
-      category: url.searchParams.get("category") ?? undefined,
-      jurisdiction: url.searchParams.get("jurisdiction") ?? undefined,
-      status: url.searchParams.get("status") ?? undefined,
+      ...(url.searchParams.get("q") !== null && { q: url.searchParams.get("q")! }),
+      ...(url.searchParams.get("category") !== null && { category: url.searchParams.get("category")! }),
+      ...(url.searchParams.get("jurisdiction") !== null && { jurisdiction: url.searchParams.get("jurisdiction")! }),
+      ...(url.searchParams.get("status") !== null && { status: url.searchParams.get("status")! }),
       page: parsePageNumber(url.searchParams.get("page"), 1),
       pageSize: parsePageNumber(url.searchParams.get("pageSize"), 20)
     });

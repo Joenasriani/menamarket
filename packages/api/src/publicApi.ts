@@ -28,10 +28,10 @@ export async function listPublicMarketsApi(query: PublicMarketQuery) {
   const pageSize = query.pageSize && query.pageSize > 0 ? Math.min(query.pageSize, 100) : 20;
 
   const filtered = await filterPublicMarkets({
-    q: query.q,
-    category: query.category,
-    jurisdiction: query.jurisdiction,
-    status
+    ...(query.q !== undefined && { q: query.q }),
+    ...(query.category !== undefined && { category: query.category }),
+    ...(query.jurisdiction !== undefined && { jurisdiction: query.jurisdiction }),
+    ...(status !== undefined && { status })
   });
 
   const total = filtered.length;

@@ -11,7 +11,7 @@ export default async function DraftDetailPage({ params }: PageProps) {
   const draft = await getMarketDraftBySlug(slug);
 
   if (!draft) {
-    notFound();
+    return notFound();
   }
 
   return (

@@ -154,11 +154,11 @@ export async function cancelOrder(input: unknown): Promise<OrderRecord> {
   const index = catalog.orders.findIndex((order) => order.id === value.orderId);
   if (index === -1) throw new Error("Order not found.");
 
-  const order = catalog.orders[index];
+  const order = catalog.orders[index]!;
   if (order.actorId !== value.actorId) throw new Error("Only the owning actor can cancel this order.");
   if (order.status !== "open") throw new Error("Only open orders can be cancelled.");
 
-  const updated: OrderRecord = { ...order, status: "cancelled", updatedAtIso: new Date().toISOString() };
+  const updated = { ...order, status: "cancelled" as const, updatedAtIso: new Date().toISOString() } as OrderRecord;
   await writeOrderCatalog({
     orders: catalog.orders.map((item, itemIndex) => itemIndex === index ? updated : item)
   });

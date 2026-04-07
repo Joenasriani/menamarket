@@ -98,7 +98,7 @@ export function validateSignupInput(input: unknown): SignupInput {
   return {
     username: value.username,
     password: value.password,
-    displayName: value.displayName as string | undefined
+    ...(value.displayName !== undefined && { displayName: value.displayName as string })
   };
 }
 
@@ -135,7 +135,7 @@ export async function createActor(input: unknown): Promise<ActorRecord> {
     id: `actor_${Math.random().toString(36).slice(2, 10)}`,
     username: validated.username,
     passwordHash: hashPassword(validated.password),
-    displayName: validated.displayName,
+    ...(validated.displayName !== undefined && { displayName: validated.displayName }),
     createdAtIso: now,
     updatedAtIso: now
   };
