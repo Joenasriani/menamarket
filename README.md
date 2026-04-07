@@ -80,7 +80,7 @@ See `.env.example` for the full list and descriptions.
 | `PAYMENT_RAILS_ENABLED` | Yes | `true` or `false` |
 | `DEFAULT_FUNDING_RAIL` | Yes | e.g. `manual` |
 | `DEFAULT_PAYOUT_RAIL` | Yes | e.g. `manual` |
-| `MENAMARKET_API` | Yes | Set to the full base URL of the deployed API (e.g. `https://your-project.vercel.app/api`). Set this in the Vercel dashboard. |
+| `MENAMARKET_API` | Yes | Full base URL of the deployed API. On Vercel set to `https://your-project.vercel.app/api`; locally set to `http://localhost:3000/api` in your `.env`. |
 | `OPENROUTER_API_KEY` | No | Only required if AI features are enabled |
 | `OPENROUTER_MODEL` | No | Defaults to `openrouter/auto:free`. Override to select a specific model. |
 

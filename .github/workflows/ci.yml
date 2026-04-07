@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: Lint, typecheck, test, build
@@ -34,7 +37,7 @@ jobs:
         run: npm run build:packages
 
       - name: Test
-        run: node --test tests/**/*.test.mjs
+        run: npm test
 
       - name: Build web app
         run: npm run build:web
