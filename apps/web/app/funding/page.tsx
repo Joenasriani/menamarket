@@ -149,7 +149,8 @@ export default function FundingPage() {
       <Card title="Create funding or payout request" eyebrow="Rail request">
         <div className="stack" style={{ gap: 14 }}>
           <label className="stack">
-            <span>Actor ID {sessionLoaded && !actorId ? <span style={{ color: "#ffb2b2", fontSize: 13 }}>(sign in to auto-fill)</span> : null}</span>
+            <span>Actor ID</span>
+            {sessionLoaded && !actorId ? <div style={{ color: "#ffb2b2", fontSize: 13 }}>(sign in to auto-fill)</div> : null}
             <input style={fieldStyle} value={actorId} onChange={(event) => setActorId(event.target.value)} placeholder="actor_..." required />
           </label>
           <label className="stack">

@@ -45,17 +45,17 @@ export default async function PortfolioPage() {
           <Card title="Cash balance" eyebrow="Ledger">
             <div className="stack" style={{ gap: 8 }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 600, color: "#edf3fb" }}>
-                {ledgerAccount.cashBalance.toFixed(2)}
+                {ledgerAccount.cashBalance.toFixed(2)} <span style={{ fontSize: "0.75rem", color: "#94a9c0" }}>units</span>
               </div>
-              <div>Reserved: {ledgerAccount.cashReserved.toFixed(2)}</div>
-              <div>Available: {(ledgerAccount.cashBalance - ledgerAccount.cashReserved).toFixed(2)}</div>
+              <div>Reserved: {ledgerAccount.cashReserved.toFixed(2)} units</div>
+              <div>Available: {(ledgerAccount.cashBalance - ledgerAccount.cashReserved).toFixed(2)} units</div>
             </div>
           </Card>
           <Card title="Holdings" eyebrow="Ledger">
             {ledgerAccount.holdings.length ? (
               <div className="stack" style={{ gap: 8 }}>
-                {ledgerAccount.holdings.map((holding, index) => (
-                  <div key={index}>
+                {ledgerAccount.holdings.map((holding) => (
+                  <div key={`${holding.marketSlug}:${holding.outcomeId}`}>
                     {holding.marketSlug} · {holding.outcomeId} · qty {holding.quantity}
                     {holding.reservedQuantity > 0 ? ` (${holding.reservedQuantity} reserved)` : ""}
                   </div>

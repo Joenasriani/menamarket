@@ -144,7 +144,7 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
       ) : (
         <div className="card-grid">
           {markets.map((market) => (
-            <a key={market.slug} href={`/markets/${market.slug}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+            <a key={market.slug} href={`/markets/${market.slug}`} aria-label={`Open market detail for: ${market.question}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
               <Card title={market.question} eyebrow={market.category}>
                 <div className="stack" style={{ gap: 12 }}>
                   <div className="inline">
