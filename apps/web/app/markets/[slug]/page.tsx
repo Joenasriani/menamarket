@@ -97,7 +97,7 @@ export default async function MarketDetailPage({ params }: PageProps) {
         </Card>
       </div>
 
-      <PlaceOrderForm marketSlug={slug} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} />
+      <PlaceOrderForm marketSlug={slug} marketStatus={market.status} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} />
 
       <AiMarketSummary slug={slug} question={market.question} outcomes={market.outcomes.map((outcome) => ({ id: outcome.id, label: outcome.label }))} {...(market.description !== undefined && { description: market.description })} />
 

@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { Badge, Card, PageHeader } from "@menamarket/ui";
+
+export const metadata: Metadata = {
+  title: "About — MENAMarket",
+  description: "Learn about MENAMarket, the MENA-focused prediction market platform."
+};
 
 export default function AboutPage() {
   return (
