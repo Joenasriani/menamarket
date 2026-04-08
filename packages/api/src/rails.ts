@@ -108,7 +108,7 @@ async function writeRailsCatalog(next: RailsCatalog): Promise<void> {
     await fs.writeFile(filePath, JSON.stringify(next, null, 2) + "\n", "utf-8");
   } catch (err) {
     const isReadOnly = err instanceof Error &&
-      (err.message.includes("EROFS") || err.message.includes("read-only") || err.message.includes("ENOENT"));
+      (err.message.includes("EROFS") || err.message.includes("read-only"));
     throw new Error(
       isReadOnly
         ? "Persistent writes are unavailable in this deployment. Connect a database to enable trading."
