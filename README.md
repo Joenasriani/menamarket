@@ -117,5 +117,54 @@ See `.env.example` for the full list and descriptions.
 
 This repo uses **npm workspaces** (root `package.json`). Vercel is configured to use npm via `"packageManager": "npm@10.9.2"` in `package.json` and the committed `package-lock.json`. There is no `pnpm-workspace.yaml` in this repo; npm is the sole package manager.
 
-## Status
-This is a real shell implementation only. Core trading, funding, oracle resolution, and compliance workflows are intentionally deferred to later scoped modules.
+## Public preview mode
+
+The public website (`apps/web`) operates in **public preview mode** by default — all market browsing and activity features work without any account or authentication setup.
+
+### What works in public preview
+
+| Feature | Status |
+|---|---|
+| Homepage | ✅ Available |
+| Markets listing (search + filter) | ✅ Available |
+| Market detail (read-only pricing, orderbook) | ✅ Available |
+| Activity feed | ✅ Available |
+| About page | ✅ Available |
+| Compliance page | ✅ Available |
+
+### What is disabled in public preview
+
+| Feature | Status | Notes |
+|---|---|---|
+| Login / Sign-up | ⏳ Coming soon | Shows a clear notice; no form shown without Supabase |
+| Portfolio | ⏳ Coming soon | Requires sign-in; shows empty state for guests |
+| Funding / Payouts | ⏳ Coming soon | Shows roadmap notice; no actions exposed |
+| Order placement | ⏳ Coming soon | Market detail shows read-only orderbook only |
+
+### How public preview detection works
+
+Authentication availability is determined at build time by checking:
+- `NEXT_PUBLIC_SUPABASE_URL` — must be a real Supabase project URL (not the placeholder)
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — must be non-empty
+
+If either value is missing or empty, the site operates in public preview mode:
+- Login and sign-up links are hidden from the navigation
+- Login and sign-up pages show a clear "not available" notice
+- Funding page shows a roadmap notice with no actions
+- Market detail shows read-only orderbook and pricing
+
+### Enabling full mode
+
+To activate authentication and user accounts:
+
+1. Create a [Supabase](https://supabase.com) project.
+2. Copy the **Project URL** and **anon (public) key** from your Supabase dashboard.
+3. Set the following environment variables (in `.env` locally, or in Vercel's dashboard):
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ACTOR_SESSION_SECRET=a-long-random-secret
+   ```
+4. Rebuild and deploy. Login, signup, portfolio, and funding pages will become active.
+
+

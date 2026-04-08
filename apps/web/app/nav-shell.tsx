@@ -11,6 +11,12 @@ type SessionResponse = {
   } | null;
 };
 
+// Auth is available only when both Supabase env vars are configured and non-empty.
+// NEXT_PUBLIC_ vars are inlined at build time by Next.js.
+const authAvailable =
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
 const guestNavItems = [
   ["Markets", "/markets"],
   ["Activity", "/activity"],
@@ -86,7 +92,7 @@ export function NavShell() {
             <span className="nav-link nav-link--user" aria-label="Signed in actor">@{session.username}</span>
             <button className="nav-link nav-button" onClick={signOut} type="button">Sign out</button>
           </>
-        ) : loaded && !session ? (
+        ) : loaded && !session && authAvailable ? (
           <>
             <a className="nav-link nav-link--auth" href="/login" onClick={() => setMenuOpen(false)}>Log in</a>
             <a className="nav-link nav-link--signup" href="/signup" onClick={() => setMenuOpen(false)}>Sign up</a>

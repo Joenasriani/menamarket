@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Badge, Button, Card, PageHeader } from "@menamarket/ui";
 import { createBrowserSupabaseClient } from "../lib/supabase/client";
+import { PreviewNotice } from "../preview-notice";
 
 const fieldStyle: React.CSSProperties = {
   width: "100%",
@@ -12,6 +13,11 @@ const fieldStyle: React.CSSProperties = {
   background: "rgba(255,255,255,0.03)",
   color: "#edf3fb"
 };
+
+// Auth is available only when Supabase is configured with a real anon key.
+const authAvailable =
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -54,6 +60,24 @@ export default function LoginPage() {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  if (!authAvailable) {
+    return (
+      <div className="section stack" style={{ maxWidth: 560, margin: "0 auto" }}>
+        <PageHeader eyebrow="Sign in" title="Sign in to your account" description="Sign in with your email and password to access your portfolio, place orders, and manage your account." />
+        <PreviewNotice message="Authentication is not available in the current public preview. User accounts will be enabled in a future release." />
+        <Card title="Login unavailable" eyebrow="Preview mode">
+          <div className="stack" style={{ gap: 12 }}>
+            <div style={{ color: "#94a9c0" }}>
+              Sign-in and account creation are not yet active. Browse public markets and activity without an account.
+            </div>
+            <a href="/markets" style={{ color: "#8ce6d6" }}>Browse markets →</a>
+            <a href="/about" style={{ color: "#94a9c0" }}>About MENAMarket →</a>
+          </div>
+        </Card>
+      </div>
+    );
   }
 
   return (

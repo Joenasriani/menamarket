@@ -1,6 +1,7 @@
 import { Badge, Button, Card } from "@menamarket/ui";
 import { listPublicMarkets } from "@menamarket/api";
 import type { MarketCatalogRecord } from "@menamarket/api";
+import { PreviewNotice } from "./preview-notice";
 
 export const dynamic = "force-dynamic";
 
@@ -96,13 +97,13 @@ export default async function HomePage() {
           <Badge tone="accent">MENA-focused prediction markets</Badge>
           <h1>Bet on the future of the MENA region.</h1>
           <p>
-            Browse and trade real prediction markets covering finance, technology,
+            Browse real prediction markets covering finance, technology,
             infrastructure, and geopolitics across Saudi Arabia, UAE, Egypt, Qatar,
             Morocco, Jordan, and the GCC — no account required to browse.
           </p>
           <div className="pill-row">
             <Button href="/markets">Browse all markets</Button>
-            <Button href="/signup" variant="secondary">Create account</Button>
+            <Button href="/about" variant="secondary">About MENAMarket</Button>
           </div>
           <div className="stats-grid">
             <Card title={`${openMarkets.length} open`} eyebrow="Live markets">
@@ -124,8 +125,8 @@ export default async function HomePage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {[
               { n: "1", title: "Browse markets", body: "Explore public markets freely — no login needed. See live odds, outcomes, and probabilities." },
-              { n: "2", title: "Create an account", body: "Sign up to trade. Place buy or sell orders on any open market outcome." },
-              { n: "3", title: "Track your positions", body: "View your portfolio, open orders, and ledger balance in your account dashboard." },
+              { n: "2", title: "Sign up when ready", body: "User accounts and trading are coming soon. Sign-up and funding features will be activated in a future release." },
+              { n: "3", title: "Track your positions", body: "Once accounts are live, view your portfolio, open orders, and ledger balance in your account dashboard." },
             ].map(({ n, title, body }) => (
               <div key={n} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
                 <div style={{ width: 28, height: 28, borderRadius: 999, background: "linear-gradient(135deg,#37c3a6,#4aa3ff)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#08131f", flexShrink: 0 }}>{n}</div>
@@ -182,20 +183,20 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-header">
           <h2>Explore the platform</h2>
-          <p>Browse markets, track activity, and manage your account.</p>
+          <p>Browse markets and track activity. Account features are coming soon.</p>
         </div>
-        <div className="card-grid">
-          <Card title="All markets" eyebrow="Discovery">
+        <PreviewNotice message="Public preview — market browsing is available now. Portfolio, funding, and trading features will be enabled once user accounts are live." />
+        <div className="card-grid" style={{ marginTop: 16 }}>
+          <Card title="All markets" eyebrow="Available now">
             Search and filter prediction markets by category, jurisdiction, and status.
             <div className="card-action-link"><a href="/markets">Browse all markets →</a></div>
           </Card>
-          <Card title="Portfolio" eyebrow="Positions">
-            Sign in to view your open positions, pending orders, and account balance.
-            <div className="card-action-link"><a href="/portfolio">View portfolio →</a></div>
-          </Card>
-          <Card title="Activity feed" eyebrow="Live updates">
+          <Card title="Activity feed" eyebrow="Available now">
             Track live market activity including new orders, fills, and state changes.
             <div className="card-action-link"><a href="/activity">View activity →</a></div>
+          </Card>
+          <Card title="Portfolio" eyebrow="Coming soon">
+            View open positions, pending orders, and account balance. Available once user accounts are live.
           </Card>
         </div>
       </section>
