@@ -166,7 +166,7 @@ export default async function HomePage() {
         <section className="section">
           <div className="section-header">
             <h2>Browse by category</h2>
-            <p>Filter markets by topic to find what you&apos;re interested in.</p>
+            <p>Filter markets by topic to find what you're interested in.</p>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             {categories.map((cat) => (

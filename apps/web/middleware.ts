@@ -71,8 +71,10 @@ export async function middleware(request: NextRequest) {
     // Refresh session if expired — required for Server Components.
     // This never blocks access; the public site is always reachable.
     await supabase.auth.getUser();
-  } catch {
+  } catch (err) {
     // Session refresh failure is non-fatal — the public site remains accessible.
+    // Log to console so misconfiguration is visible in server logs without blocking requests.
+    console.warn("[middleware] Supabase session refresh failed:", err instanceof Error ? err.message : String(err));
   }
 
   return response;
