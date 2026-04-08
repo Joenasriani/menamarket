@@ -9,9 +9,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build:packages && tsc -b",
+    "build": "npm run build:packages && tsc -b tsconfig.solution.json",
     "lint": "node --eval \"const fs=require('node:fs'); const required=['data/rails.json','specs/rails.schema.json','packages/api/src/rails.ts','apps/web/app/api/public/rails/route.ts','apps/web/app/api/public/funding-intents/route.ts','apps/web/app/api/public/payout-requests/route.ts','apps/web/app/funding/page.tsx','tests/rails.test.mjs','.env.example']; const missing=required.filter((file)=>!fs.existsSync(file)); if(missing.length){console.error('Missing required files: ' + missing.join(', ')); process.exit(1);} console.log('Lint passed: M20 wallet-rails files are present.');\"",
-    "typecheck": "tsc -b --pretty false",
+    "typecheck": "tsc -b tsconfig.solution.json --pretty false",
     "pretest": "npm run build",
     "test": "node --test tests/**/*.test.mjs",
     "dev:web": "npm --workspace @menamarket/web run dev",
