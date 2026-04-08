@@ -31,13 +31,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "references": [
-    {
-      "path": "../../packages/ui"
-    },
-    {
-      "path": "../../packages/api"
-    }
   ]
 }
