@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Badge, Card, EmptyState, PageHeader, TableShell } from "@menamarket/ui";
 import { AiMarketSummary } from "./ai-market-summary";
 import { PlaceOrderForm } from "./place-order-form";
+import { PreviewNotice } from "../../preview-notice";
 import { getOrderBook, getPublicMarketBySlug, getPublicMarketPricing, getResolutionByMarketSlug } from "@menamarket/api";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +40,7 @@ export default async function MarketDetailPage({ params }: PageProps) {
         <Badge>{market.visibility}</Badge>
         <Badge>{market.outcomeType}</Badge>
       </div>
+      <PreviewNotice message="Read-only preview — live pricing shown. Order placement is not available in the current public preview." />
 
       <TableShell
         columns={["Field", "Value"]}

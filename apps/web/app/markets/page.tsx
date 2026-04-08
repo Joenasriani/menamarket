@@ -61,85 +61,139 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
     })
   ]);
 
+  const hasActiveFilters = Boolean(params.q || params.category || params.jurisdiction || status);
+
   return (
     <div className="section stack">
       <PageHeader
         eyebrow="Markets"
-        title="Public market discovery"
-        description="Search and filter only against real published market records. No synthetic trends or invented highlights are shown."
+        title="Prediction markets"
+        description="Browse real prediction markets covering finance, technology, geopolitics, and more across the MENA region."
       />
 
-      <div className="card-grid">
-        <Card title={`Total public markets: ${summary.total}`} eyebrow="Catalog size">
-          The discovery surface reflects the real contents of the public market catalog.
-        </Card>
-        <Card title={`Categories: ${summary.categories.length}`} eyebrow="Facet count">
-          Categories are derived from actual public records, not editorial placeholders.
-        </Card>
-        <Card title={`Jurisdictions: ${summary.jurisdictions.length}`} eyebrow="Facet count">
-          Jurisdictions appear only when real market records exist for them.
-        </Card>
-      </div>
+      {/* ── Search form ──────────────────────────────────────────────── */}
+      <form action="/markets" method="GET" className="inline" style={{ flexWrap: "wrap", gap: 10 }}>
+        <label
+          htmlFor="market-search"
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0,0,0,0)",
+            whiteSpace: "nowrap",
+            border: 0
+          }}
+        >
+          Search markets
+        </label>
+        <input
+          id="market-search"
+          type="search"
+          name="q"
+          defaultValue={params.q ?? ""}
+          placeholder="Search markets…"
+          style={{
+            flex: "1 1 240px",
+            padding: "10px 14px",
+            borderRadius: 999,
+            border: "1px solid rgba(125, 161, 196, 0.22)",
+            background: "rgba(255,255,255,0.04)",
+            color: "#edf3fb",
+            fontSize: 14,
+            minWidth: 200
+          }}
+        />
+        <button
+          type="submit"
+          aria-label="Search markets"
+          style={{
+            padding: "10px 20px",
+            borderRadius: 999,
+            border: "1px solid rgba(55, 195, 166, 0.2)",
+            background: "linear-gradient(135deg, #37c3a6, #4aa3ff)",
+            color: "#08131f",
+            fontWeight: 600,
+            fontSize: 14,
+            cursor: "pointer"
+          }}
+        >
+          Search
+        </button>
+        {hasActiveFilters && (
+          <a
+            href="/markets"
+            style={{ padding: "10px 16px", borderRadius: 999, border: "1px solid rgba(125, 161, 196, 0.18)", color: "#94a9c0", fontSize: 13 }}
+          >
+            Clear all filters ×
+          </a>
+        )}
+      </form>
 
-      <Card title="Active filters" eyebrow="Query state">
-        <div className="inline">
-          {params.q ? <Badge tone="accent">q: {params.q}</Badge> : <Badge>q: none</Badge>}
-          {params.category ? <Badge tone="accent">category: {params.category}</Badge> : <Badge>category: none</Badge>}
-          {params.jurisdiction ? <Badge tone="accent">jurisdiction: {params.jurisdiction}</Badge> : <Badge>jurisdiction: none</Badge>}
-          {status ? <Badge tone="accent">status: {status}</Badge> : <Badge>status: none</Badge>}
+      {/* ── Filter facets ─────────────────────────────────────────────── */}
+      {(summary.categories.length > 0 || summary.jurisdictions.length > 0 || summary.statuses.length > 0) && (
+        <div className="stack" style={{ gap: 10 }}>
+          {summary.categories.length > 0 && (
+            <div className="inline" style={{ gap: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 12, color: "#94a9c0", textTransform: "uppercase", letterSpacing: "0.06em", minWidth: 80 }}>Category</span>
+              {summary.categories.map((facet) => (
+                <a key={facet.value} href={buildFilterHref(params, { category: facet.value })}>
+                  <Badge tone={params.category === facet.value ? "accent" : "neutral"}>
+                    {facet.value} ({facet.count})
+                  </Badge>
+                </a>
+              ))}
+              {params.category && (
+                <a href={clearFilterHref(params, "category")} style={{ fontSize: 12, color: "#94a9c0" }}>clear ×</a>
+              )}
+            </div>
+          )}
+          {summary.jurisdictions.length > 0 && (
+            <div className="inline" style={{ gap: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 12, color: "#94a9c0", textTransform: "uppercase", letterSpacing: "0.06em", minWidth: 80 }}>Region</span>
+              {summary.jurisdictions.map((facet) => (
+                <a key={facet.value} href={buildFilterHref(params, { jurisdiction: facet.value })}>
+                  <Badge tone={params.jurisdiction === facet.value ? "accent" : "neutral"}>
+                    {facet.value} ({facet.count})
+                  </Badge>
+                </a>
+              ))}
+              {params.jurisdiction && (
+                <a href={clearFilterHref(params, "jurisdiction")} style={{ fontSize: 12, color: "#94a9c0" }}>clear ×</a>
+              )}
+            </div>
+          )}
+          {summary.statuses.length > 0 && (
+            <div className="inline" style={{ gap: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 12, color: "#94a9c0", textTransform: "uppercase", letterSpacing: "0.06em", minWidth: 80 }}>Status</span>
+              {summary.statuses.map((facet) => (
+                <a key={facet.value} href={buildFilterHref(params, { status: facet.value })}>
+                  <Badge tone={status === facet.value ? "accent" : "neutral"}>
+                    {facet.value} ({facet.count})
+                  </Badge>
+                </a>
+              ))}
+              {status && (
+                <a href={clearFilterHref(params, "status")} style={{ fontSize: 12, color: "#94a9c0" }}>clear ×</a>
+              )}
+            </div>
+          )}
         </div>
-      </Card>
+      )}
 
-      <div className="card-grid">
-        <Card title="Search" eyebrow="Text query">
-          <div className="stack" style={{ gap: 10 }}>
-            <a href={buildFilterHref(params, { q: "election" })}>Try q=election</a>
-            <a href={clearFilterHref(params, "q")}>Clear q</a>
-          </div>
-        </Card>
-        <Card title="Categories" eyebrow="Real facets">
-          <div className="stack" style={{ gap: 10 }}>
-            {summary.categories.length === 0 ? (
-              <div style={{ color: "#94a9c0" }}>No category facets yet.</div>
-            ) : summary.categories.map((facet) => (
-              <a key={facet.value} href={buildFilterHref(params, { category: facet.value })}>
-                {facet.value} ({facet.count})
-              </a>
-            ))}
-            <a href={clearFilterHref(params, "category")}>Clear category</a>
-          </div>
-        </Card>
-        <Card title="Jurisdictions" eyebrow="Real facets">
-          <div className="stack" style={{ gap: 10 }}>
-            {summary.jurisdictions.length === 0 ? (
-              <div style={{ color: "#94a9c0" }}>No jurisdiction facets yet.</div>
-            ) : summary.jurisdictions.map((facet) => (
-              <a key={facet.value} href={buildFilterHref(params, { jurisdiction: facet.value })}>
-                {facet.value} ({facet.count})
-              </a>
-            ))}
-            <a href={clearFilterHref(params, "jurisdiction")}>Clear jurisdiction</a>
-          </div>
-        </Card>
+      {/* ── Results ───────────────────────────────────────────────────── */}
+      <div style={{ fontSize: 13, color: "#94a9c0" }}>
+        {markets.length === 0 ? "No markets match the current filters." : `${markets.length} market${markets.length === 1 ? "" : "s"}`}
+        {hasActiveFilters ? " (filtered)" : ""}
       </div>
-
-      <Card title="Statuses" eyebrow="Real facets">
-        <div className="inline">
-          {summary.statuses.length === 0 ? (
-            <span style={{ color: "#94a9c0" }}>No status facets yet.</span>
-          ) : summary.statuses.map((facet) => (
-            <a key={facet.value} href={buildFilterHref(params, { status: facet.value })}>
-              <Badge>{facet.value} ({facet.count})</Badge>
-            </a>
-          ))}
-          <a href={clearFilterHref(params, "status")}>Clear status</a>
-        </div>
-      </Card>
 
       {markets.length === 0 ? (
         <EmptyState
           title="No markets match the current filters"
-          description="This state is truthful: the search and facet filters are active, but no published market records currently match them."
+          description="Try clearing your filters or searching with different terms."
+          action={<a href="/markets" style={{ color: "#8ce6d6" }}>View all markets →</a>}
         />
       ) : (
         <div className="card-grid">
@@ -170,7 +224,6 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
                   <div className="inline">
                     <Badge tone="accent">{market.status}</Badge>
                     <Badge>{market.jurisdiction}</Badge>
-                    <Badge>{market.visibility}</Badge>
                   </div>
                   <div style={{ fontSize: 12, color: "#94a9c0" }}>
                     Closes{" "}
