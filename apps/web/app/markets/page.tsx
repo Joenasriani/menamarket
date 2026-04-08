@@ -147,20 +147,38 @@ export default async function MarketsPage({ searchParams }: { searchParams: Sear
             <a key={market.slug} href={`/markets/${market.slug}`} aria-label={`Open market detail for: ${market.question}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
               <Card title={market.question} eyebrow={market.category}>
                 <div className="stack" style={{ gap: 12 }}>
+                  {/* Outcome probabilities */}
+                  <div className="stack" style={{ gap: 8 }}>
+                    {market.outcomes.slice(0, 4).map((outcome) => {
+                      const pct = Math.round(outcome.probability * 100);
+                      return (
+                        <div key={outcome.id} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#94a9c0" }}>
+                            <span>{outcome.label}</span>
+                            <span style={{ color: "#8ce6d6", fontWeight: 600 }}>{pct}¢</span>
+                          </div>
+                          <div style={{ height: 4, borderRadius: 999, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                            <div style={{ width: `${pct}%`, height: "100%", borderRadius: 999, background: "#37c3a6" }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {market.outcomes.length > 4 && (
+                      <div style={{ fontSize: 12, color: "#94a9c0" }}>+{market.outcomes.length - 4} more outcomes</div>
+                    )}
+                  </div>
                   <div className="inline">
                     <Badge tone="accent">{market.status}</Badge>
                     <Badge>{market.jurisdiction}</Badge>
                     <Badge>{market.visibility}</Badge>
                   </div>
-                  <div>Resolution source: {market.resolutionSource}</div>
-                  <div>
-                    Close time:{" "}
-                    {new Date(market.closeTimeIso).toLocaleString("en-US", {
-                      dateStyle: "medium",
-                      timeStyle: "short"
+                  <div style={{ fontSize: 12, color: "#94a9c0" }}>
+                    Closes{" "}
+                    {new Date(market.closeTimeIso).toLocaleDateString("en-US", {
+                      dateStyle: "medium"
                     })}
                   </div>
-                  <div style={{ color: "#8ce6d6" }}>Open market detail →</div>
+                  <div style={{ color: "#8ce6d6", fontSize: 13 }}>View market →</div>
                 </div>
               </Card>
             </a>
