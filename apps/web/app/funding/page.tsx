@@ -24,6 +24,7 @@ export default function FundingPage() {
   const [rails, setRails] = useState<Rail[]>([]);
   const [railsError, setRailsError] = useState("");
   const [actorId, setActorId] = useState("");
+  const [username, setUsername] = useState("");
   const [amount, setAmount] = useState("100");
   const [fundingResult, setFundingResult] = useState("");
   const [payoutResult, setPayoutResult] = useState("");
@@ -33,9 +34,10 @@ export default function FundingPage() {
     let cancelled = false;
     fetch("/api/public/auth/session")
       .then((res) => res.json())
-      .then((data: { session?: { actorId: string } | null }) => {
+      .then((data: { session?: { actorId: string; username: string } | null }) => {
         if (!cancelled && data.session?.actorId) {
           setActorId(data.session.actorId);
+          setUsername(data.session.username ?? "");
         }
       })
       .catch(() => undefined)
@@ -147,12 +149,20 @@ export default function FundingPage() {
       </div>
 
       <Card title="Create funding or payout request" eyebrow="Rail request">
+        {!sessionLoaded ? (
+          <div style={{ color: "#94a9c0" }}>Checking session…</div>
+        ) : !actorId ? (
+          <div className="stack" style={{ gap: 12 }}>
+            <div style={{ color: "#94a9c0" }}>You must be signed in to fund your account.</div>
+            <a href="/login">Sign in to fund your account →</a>
+          </div>
+        ) : (
         <div className="stack" style={{ gap: 14 }}>
-          <label className="stack">
-            <span>Actor ID</span>
-            {sessionLoaded && !actorId ? <div style={{ color: "#ffb2b2", fontSize: 13 }}>(sign in to auto-fill)</div> : null}
-            <input style={fieldStyle} value={actorId} onChange={(event) => setActorId(event.target.value)} placeholder="actor_..." required />
-          </label>
+          {username ? <div style={{ color: "#8ce6d6", fontWeight: 600 }}>@{username}</div> : null}
+          <div className="stack">
+            <span style={{ fontSize: 13, color: "#94a9c0" }}>Actor ID (locked)</span>
+            <div style={{ ...fieldStyle, color: "#94a9c0", userSelect: "all" }}>{actorId}</div>
+          </div>
           <label className="stack">
             <span>Amount</span>
             <input style={fieldStyle} type="number" min="0.01" step="any" value={amount} onChange={(event) => setAmount(event.target.value)} required />
@@ -165,6 +175,7 @@ export default function FundingPage() {
           {fundingResult ? <div style={{ color: fundingResult.startsWith("Funding intent created") ? "#8ce6d6" : "#ffb2b2" }}>{fundingResult}</div> : null}
           {payoutResult ? <div style={{ color: payoutResult.startsWith("Payout request created") ? "#8ce6d6" : "#ffb2b2" }}>{payoutResult}</div> : null}
         </div>
+        )}
       </Card>
     </div>
   );

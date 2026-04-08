@@ -75,7 +75,17 @@ async function readActorCatalog(): Promise<ActorCatalog> {
 
 async function writeActorCatalog(next: ActorCatalog): Promise<void> {
   const filePath = path.resolve(process.cwd(), "data/actors.json");
-  await fs.writeFile(filePath, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  try {
+    await fs.writeFile(filePath, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  } catch (err) {
+    const isReadOnly = err instanceof Error &&
+      (err.message.includes("EROFS") || err.message.includes("read-only"));
+    throw new Error(
+      isReadOnly
+        ? "Persistent writes are unavailable in this deployment. Connect a database to enable trading."
+        : (err instanceof Error ? err.message : "Write failed.")
+    );
+  }
 }
 
 function hashPassword(password: string): string {

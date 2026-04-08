@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
   "installCommand": "npm install",
-  "buildCommand": "npm run build:vercel",
+  "buildCommand": "npm run build:packages && npm --workspace @menamarket/web run build:app",
   "outputDirectory": "apps/web/.next"
 }

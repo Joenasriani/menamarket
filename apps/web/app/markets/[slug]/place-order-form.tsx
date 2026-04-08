@@ -25,7 +25,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer"
 };
 
-export function PlaceOrderForm({ marketSlug, outcomes }: { marketSlug: string; outcomes: Outcome[] }) {
+export function PlaceOrderForm({ marketSlug, marketStatus, outcomes }: { marketSlug: string; marketStatus: string; outcomes: Outcome[] }) {
   const [session, setSession] = useState<Session | null>(null);
   const [sessionLoading, setSessionLoading] = useState(true);
 
@@ -86,6 +86,14 @@ export function PlaceOrderForm({ marketSlug, outcomes }: { marketSlug: string; o
     } finally {
       setSubmitting(false);
     }
+  }
+
+  if (marketStatus !== "open") {
+    return (
+      <Card title="Place an order" eyebrow="Order entry">
+        <div style={{ color: "#94a9c0" }}>This market is not open for trading.</div>
+      </Card>
+    );
   }
 
   if (sessionLoading) {

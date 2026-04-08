@@ -33,7 +33,7 @@ export default function ResetPasswordPage() {
 
     const timeout = setTimeout(() => {
       setTimedOut(true);
-    }, 10000);
+    }, 12000);
 
     return () => {
       subscription.unsubscribe();

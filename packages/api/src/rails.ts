@@ -104,7 +104,17 @@ async function readRailsCatalog(): Promise<RailsCatalog> {
 
 async function writeRailsCatalog(next: RailsCatalog): Promise<void> {
   const filePath = path.resolve(process.cwd(), "data/rails.json");
-  await fs.writeFile(filePath, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  try {
+    await fs.writeFile(filePath, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  } catch (err) {
+    const isReadOnly = err instanceof Error &&
+      (err.message.includes("EROFS") || err.message.includes("read-only"));
+    throw new Error(
+      isReadOnly
+        ? "Persistent writes are unavailable in this deployment. Connect a database to enable trading."
+        : (err instanceof Error ? err.message : "Write failed.")
+    );
+  }
 }
 
 export async function listRails(direction?: "funding" | "payout"): Promise<RailRecord[]> {

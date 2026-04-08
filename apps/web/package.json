@@ -11,6 +11,7 @@
     "start": "next start -p 3000"
   },
   "dependencies": {
+    "@menamarket/api": "*",
     "@menamarket/ui": "file:../../packages/ui",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.102.1",

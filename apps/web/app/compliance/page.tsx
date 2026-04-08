@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { Badge, Card, PageHeader } from "@menamarket/ui";
+
+export const metadata: Metadata = {
+  title: "Compliance — MENAMarket",
+  description: "MENAMarket compliance controls, jurisdiction constraints, and financial safeguards."
+};
 
 const operationalConstraints = [
   { title: "Jurisdiction tracking", description: "Every market is tagged with an ISO jurisdiction code. Markets are only visible in regions where they are permitted to operate." },
