@@ -1,6 +1,8 @@
 # MENAMarket
 
-MENAMarket is a MENA-focused prediction market platform in staged development.
+**Status: Prototype — Incomplete**
+
+MENAMarket is a MENA-focused prediction market prototype in staged development. It is not a production-ready market, trading platform, payment system, or finished service.
 
 This repository currently includes:
 - M01 monorepo bootstrap
