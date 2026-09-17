@@ -48,6 +48,16 @@ function getRequiredEnv(name: string, fallback?: string): string {
   return value;
 }
 
+export function paymentRailsEnabled(): boolean {
+  return (process.env.PAYMENT_RAILS_ENABLED ?? "false").trim().toLowerCase() === "true";
+}
+
+function assertPaymentRailsEnabled(): void {
+  if (!paymentRailsEnabled()) {
+    throw new Error("Payment rails are disabled in this deployment.");
+  }
+}
+
 export function validateRailsCatalog(input: unknown): RailsCatalog {
   if (!input || typeof input !== "object" || Array.isArray(input)) {
     throw new Error("Rails catalog must be an object.");
@@ -187,6 +197,7 @@ async function resolveRailId(requestedRailId: string | undefined, direction: "fu
 }
 
 export async function createFundingIntent(input: unknown): Promise<FundingIntentRecord> {
+  assertPaymentRailsEnabled();
   const validated = validateFundingIntentInput(input);
   const railId = await resolveRailId(validated.railId, "funding");
   const catalog = await readRailsCatalog();
@@ -210,6 +221,7 @@ export async function createFundingIntent(input: unknown): Promise<FundingIntent
 }
 
 export async function createPayoutRequest(input: unknown): Promise<PayoutRequestRecord> {
+  assertPaymentRailsEnabled();
   const validated = validatePayoutRequestInput(input);
   const railId = await resolveRailId(validated.railId, "payout");
   const catalog = await readRailsCatalog();
